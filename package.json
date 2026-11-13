@@ -1,0 +1,47 @@
+{
+  "name": "trailstv",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "node scripts/prebuild.mjs",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "db:push": "drizzle-kit push",
+    "db:setup": "node scripts/db-setup.mjs",
+    "db:studio": "drizzle-kit studio",
+    "sync:nps": "tsx scripts/sync-nps.ts",
+    "sync:trails": "tsx scripts/sync-trails.ts",
+    "sync:campgrounds": "tsx scripts/sync-campgrounds.ts",
+    "stripe:setup": "tsx scripts/stripe-setup.ts",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
+    "videos:report": "tsx scripts/videos-report.ts",
+    "images:nps": "tsx scripts/fetch-park-images.ts",
+    "images:report": "tsx scripts/images-report.ts",
+    "images:activities": "tsx scripts/fetch-activity-images.ts",
+    "sync:osm": "tsx scripts/sync-osm-trails.ts"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
+    "better-auth": "^1.7.18",
+    "drizzle-orm": "^0.45.0",
+    "leaflet": "^1.9.4",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-leaflet": "^5.0.0",
+    "server-only": "^0.0.1",
+    "stripe": "^23.1.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.22",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "drizzle-kit": "^0.31.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
