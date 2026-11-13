@@ -1,0 +1,16 @@
+{
+  "code": "isro",
+  "name": "Isle Royale National Park",
+  "states": [
+    "MI"
+  ],
+  "lat": 48.1,
+  "lon": -88.55,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/isro/",
+  "timeZone": "America/Detroit",
+  "stub": true
+}

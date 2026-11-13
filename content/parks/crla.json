@@ -1,0 +1,16 @@
+{
+  "code": "crla",
+  "name": "Crater Lake National Park",
+  "states": [
+    "OR"
+  ],
+  "lat": 42.94,
+  "lon": -122.1,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/crla/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

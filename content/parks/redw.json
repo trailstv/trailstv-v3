@@ -1,0 +1,16 @@
+{
+  "code": "redw",
+  "name": "Redwood National and State Parks",
+  "states": [
+    "CA"
+  ],
+  "lat": 41.3,
+  "lon": -124.0,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/redw/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

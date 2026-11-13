@@ -1,0 +1,16 @@
+{
+  "code": "wica",
+  "name": "Wind Cave National Park",
+  "states": [
+    "SD"
+  ],
+  "lat": 43.57,
+  "lon": -103.48,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/wica/",
+  "timeZone": "America/Denver",
+  "stub": true
+}

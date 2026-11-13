@@ -1,0 +1,16 @@
+{
+  "code": "grba",
+  "name": "Great Basin National Park",
+  "states": [
+    "NV"
+  ],
+  "lat": 38.98,
+  "lon": -114.3,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/grba/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

@@ -1,0 +1,16 @@
+{
+  "code": "bibe",
+  "name": "Big Bend National Park",
+  "states": [
+    "TX"
+  ],
+  "lat": 29.25,
+  "lon": -103.25,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/bibe/",
+  "timeZone": "America/Chicago",
+  "stub": true
+}

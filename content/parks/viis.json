@@ -1,0 +1,16 @@
+{
+  "code": "viis",
+  "name": "Virgin Islands National Park",
+  "states": [
+    "VI"
+  ],
+  "lat": 18.33,
+  "lon": -64.73,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/viis/",
+  "timeZone": "America/St_Thomas",
+  "stub": true
+}

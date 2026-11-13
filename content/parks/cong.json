@@ -1,0 +1,16 @@
+{
+  "code": "cong",
+  "name": "Congaree National Park",
+  "states": [
+    "SC"
+  ],
+  "lat": 33.78,
+  "lon": -80.78,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/cong/",
+  "timeZone": "America/New_York",
+  "stub": true
+}

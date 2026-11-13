@@ -1,0 +1,16 @@
+{
+  "code": "shen",
+  "name": "Shenandoah National Park",
+  "states": [
+    "VA"
+  ],
+  "lat": 38.53,
+  "lon": -78.35,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/shen/",
+  "timeZone": "America/New_York",
+  "stub": true
+}

@@ -1,0 +1,16 @@
+{
+  "code": "gumo",
+  "name": "Guadalupe Mountains National Park",
+  "states": [
+    "TX"
+  ],
+  "lat": 31.92,
+  "lon": -104.87,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/gumo/",
+  "timeZone": "America/Denver",
+  "stub": true
+}

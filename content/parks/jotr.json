@@ -1,0 +1,16 @@
+{
+  "code": "jotr",
+  "name": "Joshua Tree National Park",
+  "states": [
+    "CA"
+  ],
+  "lat": 33.79,
+  "lon": -115.9,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/jotr/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

@@ -1,0 +1,32 @@
+{
+  "code": "grsm",
+  "name": "Great Smoky Mountains National Park",
+  "states": [
+    "TN",
+    "NC"
+  ],
+  "lat": 35.6118,
+  "lon": -83.4895,
+  "radiusKm": 45,
+  "tagline": "Ancient mountains, misty ridges and the most biodiversity of any national park.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "fishing",
+    "horseback-riding",
+    "mountain-biking",
+    "swimming",
+    "wildlife-watching",
+    "photography",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Clingmans Dome",
+    "Cades Cove",
+    "Mount LeConte",
+    "Appalachian Trail"
+  ],
+  "url": "https://www.nps.gov/grsm/",
+  "timeZone": "America/New_York"
+}

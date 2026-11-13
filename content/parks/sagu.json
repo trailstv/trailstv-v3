@@ -1,0 +1,16 @@
+{
+  "code": "sagu",
+  "name": "Saguaro National Park",
+  "states": [
+    "AZ"
+  ],
+  "lat": 32.25,
+  "lon": -110.5,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/sagu/",
+  "timeZone": "America/Phoenix",
+  "stub": true
+}

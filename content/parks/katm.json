@@ -1,0 +1,16 @@
+{
+  "code": "katm",
+  "name": "Katmai National Park and Preserve",
+  "states": [
+    "AK"
+  ],
+  "lat": 58.5,
+  "lon": -155.0,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/katm/",
+  "timeZone": "America/Anchorage",
+  "stub": true
+}

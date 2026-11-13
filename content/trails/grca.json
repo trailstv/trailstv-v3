@@ -1,0 +1,26 @@
+[
+  {
+    "id": "grca-bright-angel-3mile",
+    "name": "Bright Angel Trail to 3-Mile Resthouse",
+    "distanceMi": 6,
+    "gainFt": 2120,
+    "routeType": "out-and-back",
+    "difficulty": "hard",
+    "trailhead": {
+      "name": "Bright Angel Trailhead",
+      "lat": 36.0576,
+      "lon": -112.1438
+    },
+    "permit": null,
+    "activities": [
+      "hiking"
+    ],
+    "hazards": [
+      "heat",
+      "steep-return"
+    ],
+    "summary": "The classic inner-canyon day hike. The climb out is the hard part.",
+    "parkCode": "grca",
+    "verified": false
+  }
+]

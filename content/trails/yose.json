@@ -1,0 +1,50 @@
+[
+  {
+    "id": "yose-half-dome",
+    "name": "Half Dome",
+    "distanceMi": 15,
+    "gainFt": 4800,
+    "routeType": "out-and-back",
+    "difficulty": "very-hard",
+    "trailhead": {
+      "name": "Happy Isles",
+      "lat": 37.7323,
+      "lon": -119.5577
+    },
+    "permit": "Half Dome cables permit (lottery) required",
+    "activities": [
+      "hiking",
+      "backpacking"
+    ],
+    "hazards": [
+      "exposure",
+      "lightning"
+    ],
+    "summary": "14\u201316 mi round trip finishing on the famous cables.",
+    "parkCode": "yose",
+    "verified": false
+  },
+  {
+    "id": "yose-mist-trail-vernal",
+    "name": "Mist Trail to Vernal Fall",
+    "distanceMi": 2.4,
+    "gainFt": 1000,
+    "routeType": "out-and-back",
+    "difficulty": "moderate",
+    "trailhead": {
+      "name": "Happy Isles",
+      "lat": 37.7323,
+      "lon": -119.5577
+    },
+    "permit": null,
+    "activities": [
+      "hiking"
+    ],
+    "hazards": [
+      "slippery-rock"
+    ],
+    "summary": "Granite steps beside a 317-ft waterfall.",
+    "parkCode": "yose",
+    "verified": false
+  }
+]

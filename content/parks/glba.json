@@ -1,0 +1,16 @@
+{
+  "code": "glba",
+  "name": "Glacier Bay National Park and Preserve",
+  "states": [
+    "AK"
+  ],
+  "lat": 58.5,
+  "lon": -137.0,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/glba/",
+  "timeZone": "America/Juneau",
+  "stub": true
+}

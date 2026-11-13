@@ -1,0 +1,16 @@
+{
+  "code": "neri",
+  "name": "New River Gorge National Park and Preserve",
+  "states": [
+    "WV"
+  ],
+  "lat": 37.89,
+  "lon": -81.06,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/neri/",
+  "timeZone": "America/New_York",
+  "stub": true
+}

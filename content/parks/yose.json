@@ -1,0 +1,38 @@
+{
+  "code": "yose",
+  "name": "Yosemite National Park",
+  "states": [
+    "CA"
+  ],
+  "lat": 37.8651,
+  "lon": -119.5383,
+  "radiusKm": 45,
+  "tagline": "Granite walls, giant sequoias and some of the tallest waterfalls in North America.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "rock-climbing",
+    "rafting",
+    "swimming",
+    "fishing",
+    "cross-country-skiing",
+    "snowshoeing",
+    "skiing",
+    "horseback-riding",
+    "mountain-biking",
+    "stargazing",
+    "photography",
+    "wildlife-watching",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Yosemite Valley",
+    "Glacier Point",
+    "Tuolumne Meadows",
+    "Mariposa Grove"
+  ],
+  "avalancheCenter": "ESAC",
+  "url": "https://www.nps.gov/yose/",
+  "timeZone": "America/Los_Angeles"
+}

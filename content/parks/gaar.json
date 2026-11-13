@@ -1,0 +1,16 @@
+{
+  "code": "gaar",
+  "name": "Gates of the Arctic National Park and Preserve",
+  "states": [
+    "AK"
+  ],
+  "lat": 67.78,
+  "lon": -153.3,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/gaar/",
+  "timeZone": "America/Anchorage",
+  "stub": true
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "zion-featured",
+    "title": "Zion National Park",
+    "url": "https://www.youtube.com/watch?v=XXXXXXXXXXX",
+    "slot": "featured",
+    "access": "free",
+    "description": "General featured video: shown on the Overview tab and for any activity without its own video. Files starting with _ are ignored; copy to content/videos/<park>.json."
+  },
+  {
+    "id": "zion-featured-hiking",
+    "title": "Hiking Zion",
+    "url": "https://youtu.be/XXXXXXXXXXX",
+    "slot": "featured",
+    "activity": "hiking",
+    "access": "free",
+    "duration": "5:20"
+  },
+  {
+    "id": "zion-featured-rock-climbing",
+    "title": "Climbing Zion's big walls",
+    "url": "https://vimeo.com/123456789/abcdef1234",
+    "slot": "featured",
+    "activity": "rock-climbing",
+    "access": "plus",
+    "poster": "https://example.com/poster.jpg",
+    "description": "Members-only: use Vimeo with domain-level privacy and a poster image."
+  }
+]

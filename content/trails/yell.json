@@ -1,0 +1,27 @@
+[
+  {
+    "id": "yell-grand-prismatic-overlook",
+    "name": "Grand Prismatic Overlook",
+    "distanceMi": 1.2,
+    "gainFt": 105,
+    "routeType": "out-and-back",
+    "difficulty": "easy",
+    "trailhead": {
+      "name": "Fairy Falls Trailhead",
+      "lat": 44.5155,
+      "lon": -110.8325
+    },
+    "permit": null,
+    "activities": [
+      "hiking",
+      "photography"
+    ],
+    "hazards": [
+      "thermal-areas",
+      "bison"
+    ],
+    "summary": "Short climb to a bird's-eye view of the rainbow hot spring.",
+    "parkCode": "yell",
+    "verified": false
+  }
+]

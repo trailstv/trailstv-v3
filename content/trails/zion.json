@@ -1,0 +1,51 @@
+[
+  {
+    "id": "zion-angels-landing",
+    "name": "Angels Landing",
+    "distanceMi": 5.4,
+    "gainFt": 1488,
+    "routeType": "out-and-back",
+    "difficulty": "hard",
+    "trailhead": {
+      "name": "The Grotto",
+      "lat": 37.2593,
+      "lon": -112.9509
+    },
+    "permit": "Angels Landing permit (lottery) required beyond Scout Lookout",
+    "activities": [
+      "hiking"
+    ],
+    "hazards": [
+      "exposure",
+      "heat"
+    ],
+    "summary": "Chain-assisted ridge to a 1,488-ft-high perch over Zion Canyon.",
+    "parkCode": "zion",
+    "verified": false
+  },
+  {
+    "id": "zion-the-narrows",
+    "name": "The Narrows (bottom-up)",
+    "distanceMi": 9.4,
+    "gainFt": 334,
+    "routeType": "out-and-back",
+    "difficulty": "hard",
+    "trailhead": {
+      "name": "Temple of Sinawava",
+      "lat": 37.2853,
+      "lon": -112.9479
+    },
+    "permit": null,
+    "activities": [
+      "hiking"
+    ],
+    "hazards": [
+      "flash-flood",
+      "cold-water"
+    ],
+    "usgsSite": "USGS-09405500",
+    "summary": "Wade the Virgin River between thousand-foot walls. No permit for bottom-up day hikes; closed when flow is high.",
+    "parkCode": "zion",
+    "verified": false
+  }
+]

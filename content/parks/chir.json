@@ -1,0 +1,16 @@
+{
+  "code": "chir",
+  "name": "Chiricahua National Park",
+  "states": [
+    "AZ"
+  ],
+  "lat": 32.01,
+  "lon": -109.34,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/chir/",
+  "timeZone": "America/Phoenix",
+  "stub": true
+}

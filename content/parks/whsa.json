@@ -1,0 +1,16 @@
+{
+  "code": "whsa",
+  "name": "White Sands National Park",
+  "states": [
+    "NM"
+  ],
+  "lat": 32.78,
+  "lon": -106.17,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/whsa/",
+  "timeZone": "America/Denver",
+  "stub": true
+}

@@ -1,0 +1,16 @@
+{
+  "code": "blca",
+  "name": "Black Canyon of the Gunnison National Park",
+  "states": [
+    "CO"
+  ],
+  "lat": 38.57,
+  "lon": -107.72,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/blca/",
+  "timeZone": "America/Denver",
+  "stub": true
+}

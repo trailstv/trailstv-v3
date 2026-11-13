@@ -1,0 +1,32 @@
+{
+  "code": "grca",
+  "name": "Grand Canyon National Park",
+  "states": [
+    "AZ"
+  ],
+  "lat": 36.1069,
+  "lon": -112.1129,
+  "radiusKm": 60,
+  "tagline": "A mile deep and 277 river miles long, carved by the Colorado River.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "rafting",
+    "kayaking",
+    "mountain-biking",
+    "stargazing",
+    "photography",
+    "wildlife-watching",
+    "scenic-driving",
+    "cross-country-skiing"
+  ],
+  "highlights": [
+    "South Rim",
+    "North Rim",
+    "Bright Angel Trail",
+    "Colorado River"
+  ],
+  "url": "https://www.nps.gov/grca/",
+  "timeZone": "America/Phoenix"
+}

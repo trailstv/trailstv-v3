@@ -1,0 +1,48 @@
+{
+  "_comment": "Activity hero photos. npm run images:activities downloads each one into public/images/activities/<slug>.jpg (resized to 2400px) and writes the credit to credits.json. Leave an activity out to fall back to a park photo. NPS photos are public domain; Unsplash photos are free under the Unsplash License.",
+  "all": {
+    "url": "https://unsplash.com/photos/MaIEUzXy2VA",
+    "credit": "Photo: Cameron Cox / Unsplash",
+    "note": "Grand Teton range over grassland"
+  },
+  "hiking": {
+    "url": "https://unsplash.com/photos/uL5FHKxNH90",
+    "credit": "Photo: Unsplash",
+    "note": "Cliff hike to the Lower Falls, Yellowstone"
+  },
+  "kayaking": {
+    "url": "https://npgallery.nps.gov/AssetDetail/fdd58f2a-cb9e-4f6f-a0b2-d57ca6302257",
+    "credit": "National Park Service / Jane Gamble",
+    "note": "Kayaker on a mangrove waterway, Everglades"
+  },
+  "camping": {
+    "url": "https://npgallery.nps.gov/AssetDetail/5d0feb4b-19c6-480f-9b17-61fd1743d362",
+    "credit": "NPS / Max Graves",
+    "note": "Glowing tent under the stars, Santa Rosa Island, Channel Islands"
+  },
+  "stargazing": {
+    "url": "https://npgallery.nps.gov/AssetDetail/8626ef17-8163-4b4e-a742-d7439506f6d6",
+    "credit": "P. Gaines / NPS",
+    "note": "Milky Way over snow-capped peaks, Rocky Mountain"
+  },
+  "cross-country-skiing": {
+    "url": "https://npgallery.nps.gov/AssetDetail/72877583-87d9-4f7e-a412-c25ba517095e",
+    "credit": "NPS / Alex Gary Gareis",
+    "note": "Skier at Bear Lake, Rocky Mountain"
+  },
+  "snowshoeing": {
+    "url": "https://npgallery.nps.gov/AssetDetail/68e2e9a6-08b2-4098-9100-a45cfe51b3ac",
+    "credit": "National Park Service",
+    "note": "Groomed ski and snowshoe tracks"
+  },
+  "wildlife-watching": {
+    "url": "https://npgallery.nps.gov/AssetDetail/edd458ab-7660-4460-933c-c9db16ebc17b",
+    "credit": "NPS / Neal Herbert",
+    "note": "Bison on Rose Creek, Lamar Valley, Yellowstone"
+  },
+  "scenic-driving": {
+    "url": "https://npgallery.nps.gov/AssetDetail/d09688fc-6942-4f06-93fb-1207fce365ca",
+    "credit": "NPS / Jacob W. Frank",
+    "note": "Bison jam seen in the rear-view mirror, Yellowstone"
+  }
+}

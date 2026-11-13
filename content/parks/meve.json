@@ -1,0 +1,16 @@
+{
+  "code": "meve",
+  "name": "Mesa Verde National Park",
+  "states": [
+    "CO"
+  ],
+  "lat": 37.18,
+  "lon": -108.49,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/meve/",
+  "timeZone": "America/Denver",
+  "stub": true
+}

@@ -1,0 +1,16 @@
+{
+  "code": "hosp",
+  "name": "Hot Springs National Park",
+  "states": [
+    "AR"
+  ],
+  "lat": 34.51,
+  "lon": -93.05,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/hosp/",
+  "timeZone": "America/Chicago",
+  "stub": true
+}

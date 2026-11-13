@@ -1,0 +1,16 @@
+{
+  "code": "kefj",
+  "name": "Kenai Fjords National Park",
+  "states": [
+    "AK"
+  ],
+  "lat": 59.92,
+  "lon": -149.65,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/kefj/",
+  "timeZone": "America/Anchorage",
+  "stub": true
+}

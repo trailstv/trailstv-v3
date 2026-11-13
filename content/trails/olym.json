@@ -1,0 +1,24 @@
+[
+  {
+    "id": "olym-hall-of-mosses",
+    "name": "Hall of Mosses",
+    "distanceMi": 0.8,
+    "gainFt": 100,
+    "routeType": "loop",
+    "difficulty": "easy",
+    "trailhead": {
+      "name": "Hoh Rain Forest Visitor Center",
+      "lat": 47.8606,
+      "lon": -123.9346
+    },
+    "permit": null,
+    "activities": [
+      "hiking",
+      "photography"
+    ],
+    "hazards": [],
+    "summary": "Moss-draped bigleaf maples in the Hoh Rain Forest.",
+    "parkCode": "olym",
+    "verified": false
+  }
+]

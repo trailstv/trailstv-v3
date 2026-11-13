@@ -1,0 +1,26 @@
+[
+  {
+    "id": "glac-highline",
+    "name": "Highline Trail to Granite Park Chalet",
+    "distanceMi": 7.6,
+    "gainFt": 830,
+    "routeType": "point-to-point",
+    "difficulty": "moderate",
+    "trailhead": {
+      "name": "Logan Pass",
+      "lat": 48.6966,
+      "lon": -113.7183
+    },
+    "permit": null,
+    "activities": [
+      "hiking"
+    ],
+    "hazards": [
+      "exposure",
+      "grizzly"
+    ],
+    "summary": "Cliff-side traverse along the Garden Wall. Typically opens July.",
+    "parkCode": "glac",
+    "verified": false
+  }
+]

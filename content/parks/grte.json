@@ -1,0 +1,40 @@
+{
+  "code": "grte",
+  "name": "Grand Teton National Park",
+  "states": [
+    "WY"
+  ],
+  "lat": 43.7904,
+  "lon": -110.6818,
+  "radiusKm": 35,
+  "tagline": "Jagged peaks rising straight out of Jackson Hole, with lakes at their feet.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "kayaking",
+    "boating",
+    "paddleboarding",
+    "fishing",
+    "rafting",
+    "rock-climbing",
+    "mountaineering",
+    "skiing",
+    "snowshoeing",
+    "cross-country-skiing",
+    "mountain-biking",
+    "horseback-riding",
+    "wildlife-watching",
+    "photography",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Jenny Lake",
+    "Jackson Lake",
+    "Snake River",
+    "Mormon Row"
+  ],
+  "avalancheCenter": "BTAC",
+  "url": "https://www.nps.gov/grte/",
+  "timeZone": "America/Denver"
+}

@@ -1,0 +1,20 @@
+{
+  "_comment": "Annual recreation visits used to order parks by 'most visited'. Update each spring when NPS releases the new year (NPS Visitor Use Statistics, irma.nps.gov). seki = Sequoia (1,378,337) + Kings Canyon (779,791). chir and npsa from NPS park figures reported outside the national-park ranking.",
+  "year": 2025,
+  "source": "National Park Service Visitor Use Statistics, Annual Park Ranking Report 2025",
+  "visits": {
+    "grsm": 11527939, "zion": 4984525, "yell": 4762988, "grca": 4430653, "yose": 4278413,
+    "romo": 4171431, "acad": 4079318, "grte": 3800648, "olym": 3584187, "glac": 3136557,
+    "cuva": 3025325, "jotr": 2932644, "indu": 2629497, "hosp": 2494611, "jeff": 2209028,
+    "seki": 2158128, "brca": 1967367, "neri": 1958440, "havo": 1877854, "shen": 1682152,
+    "mora": 1635342, "arch": 1511740, "care": 1388476, "deva": 1320134, "redw": 1202480,
+    "badl": 1139361, "hale": 853711, "sagu": 847749, "cany": 796057, "ever": 778198,
+    "glba": 740044, "thro": 729893, "maca": 660734, "whsa": 659742, "crla": 632242,
+    "wica": 606258, "bibe": 568104, "dena": 543300, "lavo": 504777, "bisc": 486567,
+    "viis": 471074, "meve": 463130, "grsa": 432498, "kefj": 425369, "cave": 410778,
+    "pinn": 343208, "pefo": 315951, "cong": 287833, "blca": 250086, "chis": 227186,
+    "gumo": 206423, "voya": 206326, "grba": 161210, "wrst": 108840, "drto": 89355,
+    "chir": 70407, "noca": 46925, "npsa": 43258, "katm": 34479, "isro": 29091,
+    "lacl": 19778, "gaar": 14923, "kova": 7786
+  }
+}

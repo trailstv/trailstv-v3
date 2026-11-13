@@ -1,0 +1,117 @@
+{
+  "_comment": "Home page 'Top 3's': the best parks for each activity, in order. Keys are activity slugs; park codes must exist in content/parks. 1–3 picks each; 'why' is the one-line reason shown on the card. Activities left out don't get a pill.",
+  "hiking": [
+    { "park": "zion", "why": "Angels Landing, The Narrows and Observation Point" },
+    { "park": "glac", "why": "Highline Trail and Grinnell Glacier through alpine country" },
+    { "park": "yose", "why": "Half Dome, the Mist Trail and Yosemite Valley's big walls" }
+  ],
+  "backpacking": [
+    { "park": "grca", "why": "Rim-to-rim across the canyon, camping at Phantom Ranch or Bright Angel" },
+    { "park": "olym", "why": "Wilderness coast, rainforest valleys and glaciated peaks in one park" },
+    { "park": "isro", "why": "Island wilderness on the Greenstone Ridge, reached only by boat or plane" }
+  ],
+  "camping": [
+    { "park": "grte", "why": "Lakeside campgrounds right under the Teton Range" },
+    { "park": "grsm", "why": "Ten developed campgrounds in old-growth Appalachian forest" },
+    { "park": "acad", "why": "Blackwoods and Seawall, a short walk from the Atlantic shore" }
+  ],
+  "kayaking": [
+    { "park": "glba", "why": "Paddle among calving tidewater glaciers and humpback whales" },
+    { "park": "voya", "why": "A park that's mostly water: linked lakes and hundreds of islands" },
+    { "park": "chis", "why": "Sea caves and kelp forests off Santa Cruz Island" }
+  ],
+  "rafting": [
+    { "park": "grca", "why": "The Colorado River through the canyon: the classic multi-day trip" },
+    { "park": "neri", "why": "Some of the East's best whitewater on the New and Gauley rivers" },
+    { "park": "cany", "why": "Cataract Canyon's big rapids below the Green and Colorado confluence" }
+  ],
+  "paddleboarding": [
+    { "park": "grte", "why": "Glassy mornings on String and Leigh lakes" },
+    { "park": "indu", "why": "Calm summer days on Lake Michigan's dune shoreline" },
+    { "park": "bisc", "why": "Warm, shallow, clear water across Biscayne Bay" }
+  ],
+  "boating": [
+    { "park": "voya", "why": "Houseboats and island campsites across the big lakes" },
+    { "park": "bisc", "why": "A park that's 95% water, with keys, reefs and shipwrecks" },
+    { "park": "glba", "why": "Day boats deep into the fjords to the glacier faces" }
+  ],
+  "fishing": [
+    { "park": "yell", "why": "Native cutthroat trout in the Yellowstone and Lamar rivers" },
+    { "park": "ever", "why": "Snook, redfish and tarpon on the backcountry flats" },
+    { "park": "katm", "why": "Brooks River's salmon runs and big rainbow trout" }
+  ],
+  "rock-climbing": [
+    { "park": "yose", "why": "El Capitan and Half Dome: the birthplace of big-wall climbing" },
+    { "park": "jotr", "why": "Thousands of granite routes and boulders in the desert" },
+    { "park": "neri", "why": "Hard sandstone sport and trad lines above the New River" }
+  ],
+  "mountaineering": [
+    { "park": "mora", "why": "Glaciated 14,410 ft summit, the standard US training ground" },
+    { "park": "dena", "why": "Denali, North America's highest peak" },
+    { "park": "grte", "why": "The Grand Teton's classic alpine routes" }
+  ],
+  "skiing": [
+    { "park": "grte", "why": "World-class backcountry lines in the Tetons" },
+    { "park": "mora", "why": "Spring corn and ski touring from Paradise" },
+    { "park": "romo", "why": "Backcountry bowls and couloirs off Trail Ridge and Bear Lake" }
+  ],
+  "cross-country-skiing": [
+    { "park": "yell", "why": "Groomed trails past steaming geyser basins in winter" },
+    { "park": "crla", "why": "Ski the rim of a snow-filled caldera" },
+    { "park": "lavo", "why": "Quiet volcanic backcountry under deep snow" }
+  ],
+  "snowshoeing": [
+    { "park": "crla", "why": "Ranger-led snowshoe walks on the caldera rim" },
+    { "park": "mora", "why": "Paradise, one of the snowiest places on Earth" },
+    { "park": "romo", "why": "Bear Lake and Dream Lake routes in deep, reliable snow" }
+  ],
+  "ice-climbing": [
+    { "park": "romo", "why": "Frozen gullies and falls around Loch Vale" },
+    { "park": "mora", "why": "Glacier ice and crevasse skills on the mountain" }
+  ],
+  "mountain-biking": [
+    { "park": "cany", "why": "The White Rim Road: 100 miles of desert riding" },
+    { "park": "cuva", "why": "Singletrack on the East Rim trail system" },
+    { "park": "bibe", "why": "Remote backcountry roads across the Chihuahuan Desert" }
+  ],
+  "horseback-riding": [
+    { "park": "grca", "why": "Mule rides into the canyon from the rims" },
+    { "park": "brca", "why": "Guided rides down among the hoodoos" },
+    { "park": "shen", "why": "Trail rides along the Blue Ridge from Skyland" }
+  ],
+  "swimming": [
+    { "park": "viis", "why": "Trunk Bay and Cinnamon Bay's calm Caribbean water" },
+    { "park": "drto", "why": "Clear water around Fort Jefferson" },
+    { "park": "indu", "why": "15 miles of Lake Michigan beaches" }
+  ],
+  "snorkeling": [
+    { "park": "drto", "why": "Healthy coral and sea life right off the fort's moat wall" },
+    { "park": "viis", "why": "An underwater snorkel trail at Trunk Bay" },
+    { "park": "bisc", "why": "Living reefs and the Maritime Heritage shipwreck trail" }
+  ],
+  "caving": [
+    { "park": "maca", "why": "The world's longest known cave system" },
+    { "park": "cave", "why": "The Big Room, one of North America's largest cave chambers" },
+    { "park": "wica", "why": "Rare boxwork formations under the prairie" }
+  ],
+  "wildlife-watching": [
+    { "park": "yell", "why": "Wolves, bison and grizzlies in the Lamar and Hayden valleys" },
+    { "park": "dena", "why": "Moose, caribou, Dall sheep and grizzlies along the park road" },
+    { "park": "katm", "why": "Brown bears fishing for salmon at Brooks Falls" }
+  ],
+  "stargazing": [
+    { "park": "bibe", "why": "Some of the darkest skies in the lower 48" },
+    { "park": "grba", "why": "High desert air and a dark-sky park far from any city" },
+    { "park": "brca", "why": "Thousands of visible stars and ranger astronomy programs" }
+  ],
+  "scenic-driving": [
+    { "park": "glac", "why": "Going-to-the-Sun Road over Logan Pass" },
+    { "park": "shen", "why": "105 miles of Skyline Drive along the Blue Ridge" },
+    { "park": "romo", "why": "Trail Ridge Road, the highest continuous paved road in the US" }
+  ],
+  "photography": [
+    { "park": "arch", "why": "Delicate Arch and the Windows at sunset" },
+    { "park": "grte", "why": "Oxbow Bend and Mormon Row at sunrise" },
+    { "park": "grca", "why": "Endless rim viewpoints in changing light" }
+  ]
+}

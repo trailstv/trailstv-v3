@@ -1,0 +1,16 @@
+{
+  "code": "thro",
+  "name": "Theodore Roosevelt National Park",
+  "states": [
+    "ND"
+  ],
+  "lat": 46.97,
+  "lon": -103.45,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/thro/",
+  "timeZone": "America/Denver",
+  "stub": true
+}

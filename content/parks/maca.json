@@ -1,0 +1,16 @@
+{
+  "code": "maca",
+  "name": "Mammoth Cave National Park",
+  "states": [
+    "KY"
+  ],
+  "lat": 37.18,
+  "lon": -86.1,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/maca/",
+  "timeZone": "America/Chicago",
+  "stub": true
+}

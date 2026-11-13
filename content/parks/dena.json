@@ -1,0 +1,16 @@
+{
+  "code": "dena",
+  "name": "Denali National Park and Preserve",
+  "states": [
+    "AK"
+  ],
+  "lat": 63.33,
+  "lon": -150.5,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/dena/",
+  "timeZone": "America/Anchorage",
+  "stub": true
+}

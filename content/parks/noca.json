@@ -1,0 +1,16 @@
+{
+  "code": "noca",
+  "name": "North Cascades National Park",
+  "states": [
+    "WA"
+  ],
+  "lat": 48.7,
+  "lon": -121.2,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/noca/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

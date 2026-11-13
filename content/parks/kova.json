@@ -1,0 +1,16 @@
+{
+  "code": "kova",
+  "name": "Kobuk Valley National Park",
+  "states": [
+    "AK"
+  ],
+  "lat": 67.55,
+  "lon": -159.28,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/kova/",
+  "timeZone": "America/Anchorage",
+  "stub": true
+}

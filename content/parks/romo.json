@@ -1,0 +1,37 @@
+{
+  "code": "romo",
+  "name": "Rocky Mountain National Park",
+  "states": [
+    "CO"
+  ],
+  "lat": 40.3428,
+  "lon": -105.6836,
+  "radiusKm": 35,
+  "tagline": "Tundra, 14,259-foot Longs Peak and Trail Ridge Road.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "rock-climbing",
+    "mountaineering",
+    "ice-climbing",
+    "fishing",
+    "skiing",
+    "snowshoeing",
+    "cross-country-skiing",
+    "horseback-riding",
+    "wildlife-watching",
+    "stargazing",
+    "photography",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Trail Ridge Road",
+    "Bear Lake",
+    "Longs Peak",
+    "Moraine Park"
+  ],
+  "avalancheCenter": "CAIC",
+  "url": "https://www.nps.gov/romo/",
+  "timeZone": "America/Denver"
+}

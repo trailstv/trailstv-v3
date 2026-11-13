@@ -1,0 +1,37 @@
+{
+  "code": "olym",
+  "name": "Olympic National Park",
+  "states": [
+    "WA"
+  ],
+  "lat": 47.8021,
+  "lon": -123.6044,
+  "radiusKm": 60,
+  "tagline": "Temperate rainforest, wild Pacific coast and glaciated peaks in one park.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "kayaking",
+    "boating",
+    "fishing",
+    "mountaineering",
+    "skiing",
+    "snowshoeing",
+    "cross-country-skiing",
+    "swimming",
+    "wildlife-watching",
+    "photography",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Hoh Rain Forest",
+    "Hurricane Ridge",
+    "Rialto Beach",
+    "Lake Crescent"
+  ],
+  "tideStation": "9444090",
+  "avalancheCenter": "NWAC",
+  "url": "https://www.nps.gov/olym/",
+  "timeZone": "America/Los_Angeles"
+}

@@ -1,0 +1,16 @@
+{
+  "code": "bisc",
+  "name": "Biscayne National Park",
+  "states": [
+    "FL"
+  ],
+  "lat": 25.65,
+  "lon": -80.08,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/bisc/",
+  "timeZone": "America/New_York",
+  "stub": true
+}

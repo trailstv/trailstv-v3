@@ -1,0 +1,16 @@
+{
+  "code": "indu",
+  "name": "Indiana Dunes National Park",
+  "states": [
+    "IN"
+  ],
+  "lat": 41.6533,
+  "lon": -87.0524,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/indu/",
+  "timeZone": "America/Chicago",
+  "stub": true
+}

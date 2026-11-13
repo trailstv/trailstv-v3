@@ -1,0 +1,16 @@
+{
+  "code": "npsa",
+  "name": "National Park of American Samoa",
+  "states": [
+    "AS"
+  ],
+  "lat": -14.25,
+  "lon": -170.68,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/npsa/",
+  "timeZone": "Pacific/Pago_Pago",
+  "stub": true
+}

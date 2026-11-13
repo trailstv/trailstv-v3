@@ -1,0 +1,24 @@
+[
+  {
+    "id": "acad-jordan-pond-path",
+    "name": "Jordan Pond Path",
+    "distanceMi": 3.3,
+    "gainFt": 50,
+    "routeType": "loop",
+    "difficulty": "easy",
+    "trailhead": {
+      "name": "Jordan Pond House",
+      "lat": 44.3204,
+      "lon": -68.2531
+    },
+    "permit": null,
+    "activities": [
+      "hiking",
+      "wildlife-watching"
+    ],
+    "hazards": [],
+    "summary": "Flat loop around a glacial pond with views of the Bubbles.",
+    "parkCode": "acad",
+    "verified": false
+  }
+]

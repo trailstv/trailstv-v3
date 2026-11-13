@@ -1,0 +1,16 @@
+{
+  "code": "care",
+  "name": "Capitol Reef National Park",
+  "states": [
+    "UT"
+  ],
+  "lat": 38.2,
+  "lon": -111.17,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/care/",
+  "timeZone": "America/Denver",
+  "stub": true
+}

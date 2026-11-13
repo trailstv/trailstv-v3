@@ -1,0 +1,17 @@
+{
+  "code": "deva",
+  "name": "Death Valley National Park",
+  "states": [
+    "CA",
+    "NV"
+  ],
+  "lat": 36.24,
+  "lon": -116.82,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/deva/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

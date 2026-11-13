@@ -1,0 +1,16 @@
+{
+  "code": "mora",
+  "name": "Mount Rainier National Park",
+  "states": [
+    "WA"
+  ],
+  "lat": 46.85,
+  "lon": -121.75,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/mora/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

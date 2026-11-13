@@ -1,0 +1,16 @@
+{
+  "code": "havo",
+  "name": "Hawaiʻi Volcanoes National Park",
+  "states": [
+    "HI"
+  ],
+  "lat": 19.38,
+  "lon": -155.2,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/havo/",
+  "timeZone": "Pacific/Honolulu",
+  "stub": true
+}

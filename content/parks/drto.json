@@ -1,0 +1,16 @@
+{
+  "code": "drto",
+  "name": "Dry Tortugas National Park",
+  "states": [
+    "FL"
+  ],
+  "lat": 24.63,
+  "lon": -82.87,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/drto/",
+  "timeZone": "America/New_York",
+  "stub": true
+}

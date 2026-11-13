@@ -1,0 +1,25 @@
+[
+  {
+    "id": "grsm-alum-cave-leconte",
+    "name": "Alum Cave Trail to Mount LeConte",
+    "distanceMi": 11,
+    "gainFt": 2763,
+    "routeType": "out-and-back",
+    "difficulty": "hard",
+    "trailhead": {
+      "name": "Alum Cave Trailhead",
+      "lat": 35.629,
+      "lon": -83.4511
+    },
+    "permit": null,
+    "activities": [
+      "hiking"
+    ],
+    "hazards": [
+      "ice-in-winter"
+    ],
+    "summary": "Arch Rock, Alum Cave Bluffs and the summit lodge.",
+    "parkCode": "grsm",
+    "verified": false
+  }
+]

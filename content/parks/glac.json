@@ -1,0 +1,39 @@
+{
+  "code": "glac",
+  "name": "Glacier National Park",
+  "states": [
+    "MT"
+  ],
+  "lat": 48.7596,
+  "lon": -113.787,
+  "radiusKm": 50,
+  "tagline": "Crown of the Continent: alpine lakes, glaciers and Going-to-the-Sun Road.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "kayaking",
+    "boating",
+    "paddleboarding",
+    "fishing",
+    "rafting",
+    "mountaineering",
+    "cross-country-skiing",
+    "snowshoeing",
+    "skiing",
+    "horseback-riding",
+    "mountain-biking",
+    "wildlife-watching",
+    "photography",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Going-to-the-Sun Road",
+    "Lake McDonald",
+    "Many Glacier",
+    "Logan Pass"
+  ],
+  "avalancheCenter": "FAC",
+  "url": "https://www.nps.gov/glac/",
+  "timeZone": "America/Denver"
+}

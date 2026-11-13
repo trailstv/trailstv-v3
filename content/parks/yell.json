@@ -1,0 +1,38 @@
+{
+  "code": "yell",
+  "name": "Yellowstone National Park",
+  "states": [
+    "WY",
+    "MT",
+    "ID"
+  ],
+  "lat": 44.428,
+  "lon": -110.5885,
+  "radiusKm": 60,
+  "tagline": "The world's first national park: geysers, hot springs, bison and wolves.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "kayaking",
+    "boating",
+    "fishing",
+    "cross-country-skiing",
+    "snowshoeing",
+    "horseback-riding",
+    "mountain-biking",
+    "wildlife-watching",
+    "stargazing",
+    "photography",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Old Faithful",
+    "Grand Prismatic Spring",
+    "Lamar Valley",
+    "Grand Canyon of the Yellowstone"
+  ],
+  "avalancheCenter": "GNFAC",
+  "url": "https://www.nps.gov/yell/",
+  "timeZone": "America/Denver"
+}

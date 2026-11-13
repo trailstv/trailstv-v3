@@ -1,0 +1,16 @@
+{
+  "code": "hale",
+  "name": "Haleakalā National Park",
+  "states": [
+    "HI"
+  ],
+  "lat": 20.72,
+  "lon": -156.17,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/hale/",
+  "timeZone": "Pacific/Honolulu",
+  "stub": true
+}

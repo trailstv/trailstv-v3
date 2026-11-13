@@ -1,0 +1,16 @@
+{
+  "code": "ever",
+  "name": "Everglades National Park",
+  "states": [
+    "FL"
+  ],
+  "lat": 25.32,
+  "lon": -80.93,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/ever/",
+  "timeZone": "America/New_York",
+  "stub": true
+}

@@ -1,0 +1,16 @@
+{
+  "code": "chis",
+  "name": "Channel Islands National Park",
+  "states": [
+    "CA"
+  ],
+  "lat": 34.01,
+  "lon": -119.42,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/chis/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

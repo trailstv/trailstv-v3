@@ -1,0 +1,10 @@
+[
+  {
+    "id": "parks-overview",
+    "title": "America's national parks",
+    "url": "https://www.youtube.com/watch?v=XXXXXXXXXXX",
+    "slot": "featured",
+    "access": "free",
+    "description": "Copy this file to content/videos/home.json and paste your overview video link. It plays below the map on the home page."
+  }
+]

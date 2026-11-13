@@ -1,0 +1,16 @@
+{
+  "code": "lacl",
+  "name": "Lake Clark National Park and Preserve",
+  "states": [
+    "AK"
+  ],
+  "lat": 60.97,
+  "lon": -153.42,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/lacl/",
+  "timeZone": "America/Anchorage",
+  "stub": true
+}

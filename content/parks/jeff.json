@@ -1,0 +1,16 @@
+{
+  "code": "jeff",
+  "name": "Gateway Arch National Park",
+  "states": [
+    "MO"
+  ],
+  "lat": 38.63,
+  "lon": -90.19,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/jeff/",
+  "timeZone": "America/Chicago",
+  "stub": true
+}

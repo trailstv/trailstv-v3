@@ -1,0 +1,32 @@
+{
+  "code": "zion",
+  "name": "Zion National Park",
+  "states": [
+    "UT"
+  ],
+  "lat": 37.2982,
+  "lon": -113.0263,
+  "radiusKm": 30,
+  "tagline": "Sandstone cliffs, slot canyons and the Virgin River.",
+  "activities": [
+    "hiking",
+    "backpacking",
+    "camping",
+    "rock-climbing",
+    "mountain-biking",
+    "horseback-riding",
+    "swimming",
+    "stargazing",
+    "photography",
+    "wildlife-watching",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Angels Landing",
+    "The Narrows",
+    "Kolob Canyons",
+    "Zion-Mount Carmel Highway"
+  ],
+  "url": "https://www.nps.gov/zion/",
+  "timeZone": "America/Denver"
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "romo-sky-pond",
+    "name": "Sky Pond",
+    "distanceMi": 9,
+    "gainFt": 1780,
+    "routeType": "out-and-back",
+    "difficulty": "hard",
+    "trailhead": {
+      "name": "Glacier Gorge Trailhead",
+      "lat": 40.3106,
+      "lon": -105.6403
+    },
+    "permit": null,
+    "activities": [
+      "hiking",
+      "snowshoeing"
+    ],
+    "hazards": [
+      "lightning",
+      "avalanche-in-winter"
+    ],
+    "summary": "Past Alberta Falls and Timberline Falls to an alpine cirque lake.",
+    "parkCode": "romo",
+    "verified": false
+  }
+]

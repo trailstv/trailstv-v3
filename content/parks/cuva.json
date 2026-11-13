@@ -1,0 +1,16 @@
+{
+  "code": "cuva",
+  "name": "Cuyahoga Valley National Park",
+  "states": [
+    "OH"
+  ],
+  "lat": 41.24,
+  "lon": -81.55,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/cuva/",
+  "timeZone": "America/New_York",
+  "stub": true
+}

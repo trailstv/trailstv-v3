@@ -1,0 +1,16 @@
+{
+  "code": "pinn",
+  "name": "Pinnacles National Park",
+  "states": [
+    "CA"
+  ],
+  "lat": 36.48,
+  "lon": -121.16,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/pinn/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

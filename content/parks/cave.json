@@ -1,0 +1,16 @@
+{
+  "code": "cave",
+  "name": "Carlsbad Caverns National Park",
+  "states": [
+    "NM"
+  ],
+  "lat": 32.17,
+  "lon": -104.44,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/cave/",
+  "timeZone": "America/Denver",
+  "stub": true
+}

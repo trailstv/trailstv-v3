@@ -1,0 +1,38 @@
+{
+  "code": "acad",
+  "name": "Acadia National Park",
+  "states": [
+    "ME"
+  ],
+  "lat": 44.3386,
+  "lon": -68.2733,
+  "radiusKm": 25,
+  "tagline": "Granite coastline, carriage roads and Cadillac Mountain sunrises.",
+  "activities": [
+    "hiking",
+    "camping",
+    "kayaking",
+    "boating",
+    "paddleboarding",
+    "rock-climbing",
+    "mountain-biking",
+    "horseback-riding",
+    "swimming",
+    "fishing",
+    "cross-country-skiing",
+    "snowshoeing",
+    "wildlife-watching",
+    "stargazing",
+    "photography",
+    "scenic-driving"
+  ],
+  "highlights": [
+    "Cadillac Mountain",
+    "Jordan Pond",
+    "Park Loop Road",
+    "Carriage Roads"
+  ],
+  "tideStation": "8413320",
+  "url": "https://www.nps.gov/acad/",
+  "timeZone": "America/New_York"
+}

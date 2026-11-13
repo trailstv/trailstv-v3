@@ -1,0 +1,16 @@
+{
+  "code": "voya",
+  "name": "Voyageurs National Park",
+  "states": [
+    "MN"
+  ],
+  "lat": 48.5,
+  "lon": -92.88,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/voya/",
+  "timeZone": "America/Chicago",
+  "stub": true
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "slug": "plus-monthly",
+    "name": "TrailsTV+ Monthly",
+    "description": "Every premium feature, billed monthly.",
+    "mode": "subscription",
+    "interval": "month",
+    "lookupKey": "trailstv_plus_monthly",
+    "unitAmount": 499,
+    "currency": "usd",
+    "grants": "plus",
+    "features": [
+      "Members-only park videos",
+      "Offline packs for every park",
+      "GPX downloads for every trail",
+      "Condition alerts (coming soon)",
+      "Support park data development"
+    ]
+  },
+  {
+    "slug": "plus-yearly",
+    "name": "TrailsTV+ Yearly",
+    "description": "Same as monthly, about 40% cheaper.",
+    "mode": "subscription",
+    "interval": "year",
+    "lookupKey": "trailstv_plus_yearly",
+    "unitAmount": 3599,
+    "currency": "usd",
+    "grants": "plus",
+    "featured": true,
+    "features": [
+      "Everything in Monthly",
+      "Two months free"
+    ]
+  },
+  {
+    "slug": "park-pack",
+    "name": "Offline Park Pack",
+    "description": "Download one park's trails, trailheads and info to keep forever.",
+    "mode": "payment",
+    "lookupKey": "trailstv_park_pack",
+    "unitAmount": 599,
+    "currency": "usd",
+    "grants": "park-pack",
+    "perPark": true,
+    "features": [
+      "One park, yours to keep",
+      "Trail GeoJSON + GPX",
+      "No subscription"
+    ]
+  }
+]

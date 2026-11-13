@@ -1,0 +1,16 @@
+{
+  "code": "pefo",
+  "name": "Petrified Forest National Park",
+  "states": [
+    "AZ"
+  ],
+  "lat": 35.07,
+  "lon": -109.78,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/pefo/",
+  "timeZone": "America/Phoenix",
+  "stub": true
+}

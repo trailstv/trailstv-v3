@@ -1,0 +1,26 @@
+[
+  {
+    "id": "grte-jenny-lake-loop",
+    "name": "Jenny Lake Loop",
+    "distanceMi": 7.5,
+    "gainFt": 500,
+    "routeType": "loop",
+    "difficulty": "moderate",
+    "trailhead": {
+      "name": "Jenny Lake Visitor Center",
+      "lat": 43.7509,
+      "lon": -110.7225
+    },
+    "permit": null,
+    "activities": [
+      "hiking",
+      "wildlife-watching"
+    ],
+    "hazards": [
+      "bears"
+    ],
+    "summary": "Circle the lake below the Tetons; shortcut with the shuttle boat.",
+    "parkCode": "grte",
+    "verified": false
+  }
+]

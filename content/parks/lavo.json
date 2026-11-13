@@ -1,0 +1,16 @@
+{
+  "code": "lavo",
+  "name": "Lassen Volcanic National Park",
+  "states": [
+    "CA"
+  ],
+  "lat": 40.49,
+  "lon": -121.51,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/lavo/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

@@ -1,0 +1,16 @@
+{
+  "code": "seki",
+  "name": "Sequoia & Kings Canyon National Parks",
+  "states": [
+    "CA"
+  ],
+  "lat": 36.43,
+  "lon": -118.68,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/seki/",
+  "timeZone": "America/Los_Angeles",
+  "stub": true
+}

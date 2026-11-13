@@ -1,0 +1,16 @@
+{
+  "code": "wrst",
+  "name": "Wrangell–St. Elias National Park and Preserve",
+  "states": [
+    "AK"
+  ],
+  "lat": 61.0,
+  "lon": -142.0,
+  "radiusKm": 35,
+  "tagline": "",
+  "activities": [],
+  "highlights": [],
+  "url": "https://www.nps.gov/wrst/",
+  "timeZone": "America/Anchorage",
+  "stub": true
+}
