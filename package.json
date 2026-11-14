@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push",
     "db:setup": "node scripts/db-setup.mjs",
+    "db:sql": "node scripts/make-schema-sql.mjs",
     "db:studio": "drizzle-kit studio",
     "sync:nps": "tsx scripts/sync-nps.ts",
     "sync:trails": "tsx scripts/sync-trails.ts",
@@ -24,6 +25,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
+    "@next/third-parties": "^16.4.6",
     "better-auth": "^1.7.18",
     "drizzle-orm": "^0.45.0",
     "leaflet": "^1.9.4",

@@ -3,9 +3,10 @@
 -- It's written as ONE command so it works in any SQL editor, and it's safe to run
 -- more than once: it only creates what's missing and never deletes anything.
 -- Vercel also runs this automatically before each build when DATABASE_URL is set.
--- (Same result as `npm run db:push`.)
+-- Regenerate after schema changes: npm run db:sql
 
-DO $trailstv$BEGIN
+DO $trailstv$
+BEGIN
   CREATE TABLE IF NOT EXISTS "access_grants" (
     "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "user_id" text NOT NULL,
@@ -78,6 +79,13 @@ DO $trailstv$BEGIN
     "currency" text,
     "refunded" boolean DEFAULT false NOT NULL,
     "created_at" timestamp with time zone DEFAULT now() NOT NULL
+  );
+  CREATE TABLE IF NOT EXISTS "rate_limit" (
+    "id" text PRIMARY KEY NOT NULL,
+    "key" text NOT NULL,
+    "count" integer NOT NULL,
+    "last_request" bigint NOT NULL,
+    CONSTRAINT "rate_limit_key_unique" UNIQUE("key")
   );
   CREATE TABLE IF NOT EXISTS "session" (
     "id" text PRIMARY KEY NOT NULL,
