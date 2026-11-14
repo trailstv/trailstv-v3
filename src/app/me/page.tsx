@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SignOutButton } from "@/components/SignOutButton";
 import { getCampground } from "@/lib/campgrounds";
 import { PageHero } from "@/components/hero/PageHero";
 import { allParkHeroes } from "@/lib/hero";
@@ -53,7 +54,16 @@ export default async function MePage() {
     <>
     <PageHero random={allParkHeroes()} eyebrow={user.name} title="My Parks" />
     <div className="container" style={{ marginTop: "1rem" }}>
-      <p className="muted">{user.name} · <Link href="/account">Billing & downloads</Link></p>
+      <div className="profile-bar">
+        <div>
+          <b>{user.name}</b>
+          <div className="small muted">{user.email}{user.role === "admin" && <> · <Link href="/admin">Admin</Link></>}</div>
+        </div>
+        <div className="profile-actions">
+          <Link href="/account" className="btn-outline">Billing & downloads</Link>
+          <SignOutButton />
+        </div>
+      </div>
 
       <div className="stat-row" style={{ marginTop: "1rem" }}>
         <div className="card"><b>{d.stats.parksVisited}</b><span className="small muted">parks visited</span></div>

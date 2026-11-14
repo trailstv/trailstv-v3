@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import localFont from "next/font/local";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { UserMenu } from "@/components/UserMenu";
 import { SiteSearch } from "@/components/search/SiteSearch";
@@ -27,6 +28,9 @@ const playfair = localFont({
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
+/** TrailsTV GA4 property. NEXT_PUBLIC_GA_ID in Vercel overrides it (e.g. a test property). */
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID?.trim() || "G-56EE9VXWVM";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={playfair.variable}>
@@ -46,6 +50,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <SiteFooter />
       </body>
+      {/* Google Analytics 4 (G-56EE9VXWVM). Loads after the page is interactive
+          and records page views on every navigation. Off in local dev and when the ID isn't set. */}
+      {GA_ID && process.env.NODE_ENV === "production" && <GoogleAnalytics gaId={GA_ID} />}
     </html>
   );
 }

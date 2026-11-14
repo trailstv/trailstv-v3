@@ -6,7 +6,7 @@ import { PageHero } from "@/components/hero/PageHero";
 import { ConditionPills } from "@/components/conditions/ConditionPills";
 
 export const revalidate = 900;
-export const metadata: Metadata = { title: "Current conditions in every national park", description: "Closures, alerts, wildfires, weather warnings, snow, avalanche danger and air quality across all U.S. national parks." };
+export const metadata: Metadata = { title: "Current conditions in every National Park", description: "Closures, alerts, wildfires, weather warnings, snow, avalanche danger and air quality across all U.S. National Parks." };
 
 const time = (iso: string) => new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/Los_Angeles", timeZoneName: "short" });
 
@@ -14,7 +14,7 @@ export default async function ConditionsIndex() {
   const reports = await getAllStatusReports();
   return (
     <>
-      <PageHero random={allParkHeroes()} eyebrow="All parks" title="Current conditions" subtitle="Closures, alerts, fire, weather, snow, avalanche danger and air quality across every national park." />
+      <PageHero random={allParkHeroes()} eyebrow="All parks" title="Current conditions" subtitle="Closures, alerts, fire, weather, snow, avalanche danger and air quality across every National Park." />
       <div className="container">
         <ConditionPills active="all" title={false} />
         <div className="cond-grid">

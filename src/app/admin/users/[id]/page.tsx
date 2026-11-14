@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { isOwnerEmail } from "@/lib/owner";
 import { notFound } from "next/navigation";
 import { getUserDetail, GRANT_DURATIONS, requireAdminPage } from "@/lib/admin";
 import { getPark, getParks } from "@/lib/content";
@@ -103,7 +104,9 @@ export default async function AdminUser({ params, searchParams }: { params: Prom
       <h2>Role</h2>
       <form action={`/api/admin/users/${user.id}/role`} method="post" className="card" style={{ maxWidth: 520 }}>
         <p style={{ marginTop: 0 }}>Admins can open this dashboard and give or revoke free access for anyone.</p>
-        {user.role === "admin" ? (
+        {isOwnerEmail(user.email) ? (
+          <p className="small" style={{ margin: 0 }}><b>Site owner.</b> Always an admin; this can't be removed.</p>
+        ) : user.role === "admin" ? (
           <button type="submit" name="role" value="user" className="btn-outline" disabled={isSelf}>{isSelf ? "You can't remove your own admin role" : "Remove admin role"}</button>
         ) : (
           <button type="submit" name="role" value="admin" className="btn-outline">Make admin</button>
