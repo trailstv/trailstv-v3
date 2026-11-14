@@ -13,11 +13,11 @@ export default async function ActivitiesPage() {
   const activities = getActivities();
   const allParks = await getParksWithActivities();
   const parks = allParks.filter(isContinental);
-  const hero = activityHero("all", []);
+  const hero = await activityHero("all", []);
 
   return (
     <>
-      <PageHero image={hero} random={hero ? undefined : allParkHeroes()} withSplit eyebrow="Activities" title="Everything you can do in the National Parks" subtitle="Hover an activity to see where you can do it. Each one shows the live conditions that matter for it." />
+      <PageHero image={hero} random={hero ? undefined : await allParkHeroes()} withSplit eyebrow="Activities" title="Everything you can do in the parks" subtitle="Hover an activity to see where you can do it. Each one shows the live conditions that matter for it." />
       <SplitLayout
         map={
           <ParkMap

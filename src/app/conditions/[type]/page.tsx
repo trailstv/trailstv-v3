@@ -35,7 +35,7 @@ export default async function ConditionTypePage({ params }: { params: Promise<{ 
   return (
     <>
       <PageHero
-        random={allParkHeroes()}
+        random={await allParkHeroes()}
         withSplit
         eyebrow={<><Link href="/conditions">← All conditions</Link></>}
         title={<><span aria-hidden="true">{t.icon}</span> {t.label}</>}

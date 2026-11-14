@@ -21,8 +21,8 @@ export default async function ParksPage({ searchParams }: { searchParams: Promis
   return (
     <>
       <PageHero
-        image={act ? activityHero(act.slug, parks) : null}
-        random={act ? undefined : allParkHeroes()}
+        image={act ? await activityHero(act.slug, parks) : null}
+        random={act ? undefined : await allParkHeroes()}
         withSplit
         eyebrow="National parks"
         title={act ? <>{act.icon} {act.name}</> : "Every national park"}
@@ -64,7 +64,7 @@ export default async function ParksPage({ searchParams }: { searchParams: Promis
       </SplitLayout>
 
       <div className="container">
-        <TopRated groups={getTopThrees()} highlight={act?.slug} />
+        <TopRated groups={await getTopThrees()} highlight={act?.slug} />
       </div>
     </>
   );

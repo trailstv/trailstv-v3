@@ -7,7 +7,7 @@ import { getUser } from "@/lib/auth";
 import { listTrips, tripDays } from "@/lib/trips";
 import { NewTripForm } from "./NewTripForm";
 
-export const metadata: Metadata = { title: "Your Trips" };
+export const metadata: Metadata = { title: "Your trips" };
 
 const fmt = (d: string) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
@@ -31,7 +31,7 @@ export default async function TripsPage() {
 
   return (
     <>
-    <PageHero random={allParkHeroes()} eyebrow="Itineraries" title="Your Trips" />
+    <PageHero random={await allParkHeroes()} eyebrow="Itineraries" title="Your trips" />
     <div className="container" style={{ marginTop: "1.5rem" }}>
       <p className="muted">Plan multi-day park trips, then send each day&apos;s route to your maps app or calendar.</p>
       <div style={{ maxWidth: 480 }}><NewTripForm /></div>

@@ -23,7 +23,7 @@ export default async function PricingPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-    <PageHero random={allParkHeroes()} eyebrow="TrailsTV+" title="Go further with TrailsTV+" subtitle="Members-only park videos, offline park packs and GPX downloads." />
+    <PageHero random={await allParkHeroes()} eyebrow="TrailsTV+" title="Go further with TrailsTV+" subtitle="Members-only park videos, offline park packs and GPX downloads." />
     <div className="container" style={{ paddingTop: "2rem", maxWidth: 1080 }}>
       <p className="muted" style={{ fontSize: "1.05rem", margin: 0 }}>Free forever: every park, trail, and live condition. Paid plans add downloads and offline use.</p>
       {error && <div className="notice warn">{ERRORS[error] ?? "Something went wrong."}</div>}

@@ -3,12 +3,12 @@ import { DATA_SOURCES, MAP_SOURCES } from "@/lib/credits";
 import { PageHero } from "@/components/hero/PageHero";
 import { allParkHeroes } from "@/lib/hero";
 
-export const metadata: Metadata = { title: "Sources & Credits", description: "Where TrailsTV's park, trail, weather and conditions data comes from." };
+export const metadata: Metadata = { title: "Sources & credits", description: "Where TrailsTV's park, trail, weather and conditions data comes from." };
 
-export default function SourcesPage() {
+export default async function SourcesPage() {
   return (
     <>
-      <PageHero random={allParkHeroes()} eyebrow="About the data" title="Sources & Credits" subtitle="TrailsTV is built on public data from federal agencies and the OpenStreetMap community." />
+      <PageHero random={await allParkHeroes()} eyebrow="About the data" title="Sources & credits" subtitle="TrailsTV is built on public data from federal agencies and the OpenStreetMap community." />
       <div className="container" style={{ maxWidth: 900, marginTop: "1.5rem" }}>
         <h2>Data sources</h2>
         <div className="table-wrap">

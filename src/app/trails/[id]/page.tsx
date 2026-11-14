@@ -56,7 +56,7 @@ export default async function TrailPage({ params }: { params: Promise<{ id: stri
   return (
     <>
       <PageHero
-        image={parkHero(park)}
+        image={await parkHero(park)}
         withSplit
         eyebrow={<><Link href={`/parks/${park.code}`}>← {park.name}</Link></>}
         title={trail.name}

@@ -34,8 +34,8 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
   return (
     <>
     <PageHero
-      image={heroPark ? parkHero(heroPark) : null}
-      random={heroPark && parkHero(heroPark) ? undefined : allParkHeroes()}
+      image={heroPark ? await parkHero(heroPark) : null}
+      random={heroPark && await parkHero(heroPark) ? undefined : await allParkHeroes()}
       eyebrow={isOwner ? <Link href="/trips">← Your trips</Link> : "Shared trip"}
       title={trip.name}
       subtitle={`${trip.startDate ? `${fmtDay(trip.startDate)}${trip.endDate && trip.endDate !== trip.startDate ? " – " + fmtDay(trip.endDate) : ""} · ` : ""}${days} day${days > 1 ? "s" : ""} · ${stops.length} stop${stops.length === 1 ? "" : "s"}`}

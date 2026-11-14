@@ -52,7 +52,7 @@ export default async function MePage() {
 
   return (
     <>
-    <PageHero random={allParkHeroes()} eyebrow={user.name} title="My Parks" />
+    <PageHero random={await allParkHeroes()} eyebrow={user.name} title="My Parks" />
     <div className="container" style={{ marginTop: "1rem" }}>
       <div className="profile-bar">
         <div>

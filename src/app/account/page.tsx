@@ -27,7 +27,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-    <PageHero random={allParkHeroes()} eyebrow="Account" title="Billing & downloads" />
+    <PageHero random={await allParkHeroes()} eyebrow="Account" title="Billing & downloads" />
     <div className="container" style={{ maxWidth: 760, marginTop: "1rem" }}>
       <div className="profile-bar">
         <div className="small muted">Signed in as <b>{user.email}</b> · <Link href="/me">My Parks →</Link></div>

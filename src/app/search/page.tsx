@@ -19,7 +19,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
   return (
     <>
-      <PageHero random={allParkHeroes()} eyebrow="Search" title={term ? `“${term}”` : "Search TrailsTV"} subtitle={term ? `${hits.length === 300 ? "300+" : hits.length} result${hits.length === 1 ? "" : "s"}` : "Parks, activities, campgrounds and trails."} />
+      <PageHero random={await allParkHeroes()} eyebrow="Search" title={term ? `“${term}”` : "Search TrailsTV"} subtitle={term ? `${hits.length === 300 ? "300+" : hits.length} result${hits.length === 1 ? "" : "s"}` : "Parks, activities, campgrounds and trails."} />
       <div className="container search-page">
         <form action="/search" className="search-page-form">
           <input type="search" name="q" defaultValue={term} placeholder="Search parks, trails, camping…" aria-label="Search" autoFocus={!term} />

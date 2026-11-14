@@ -17,7 +17,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
 
   return (
     <>
-    <PageHero random={allParkHeroes()} eyebrow="TrailsTV" title={mode === "signup" ? "Create your account" : "Welcome back"} subtitle="Save favorites, plan trips, and track the parks you've visited." />
+    <PageHero random={await allParkHeroes()} eyebrow="TrailsTV" title={mode === "signup" ? "Create your account" : "Welcome back"} subtitle="Save favorites, plan trips, and track the parks you've visited." />
     <div className="container" style={{ maxWidth: 440 }}>
       {!db ? (
         <div className="notice warn">Connect Neon (DATABASE_URL) to enable accounts.</div>

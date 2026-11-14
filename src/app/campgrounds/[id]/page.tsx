@@ -73,7 +73,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
   const s = camp.sites;
   const siteTypes = ([["Tent only", s.tentOnly], ["RV only", s.rvOnly], ["Electric hookups", s.electrical], ["Group", s.group], ["Horse", s.horse], ["Walk-in / boat-in", s.walkBoatTo]] as [string, number][]).filter(([, n]) => n > 0);
   // Your own park photo first; NPS campground photos are often small.
-  const hero = parkHero(park) ?? (camp.photos[0] ? { src: camp.photos[0].url, credit: camp.photos[0].credit } : null);
+  const hero = await parkHero(park) ?? (camp.photos[0] ? { src: camp.photos[0].url, credit: camp.photos[0].credit } : null);
 
   return (
     <>

@@ -39,7 +39,7 @@ export default async function ActivityPage({ params }: { params: Promise<{ slug:
   return (
     <>
       <PageHero
-        image={activityHero(slug, parks)}
+        image={await activityHero(slug, parks)}
         withSplit
         eyebrow={<><Link href="/activities">← All activities</Link></>}
         title={<>{activity.icon} {activity.name}</>}

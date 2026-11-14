@@ -50,7 +50,7 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
   return (
     <>
       <PageHero
-        image={parkHero(park)}
+        image={await parkHero(park)}
         withSplit
         eyebrow={<><Link href="/parks">← All parks</Link> · {park.states.join(", ")}</>}
         title={park.name}

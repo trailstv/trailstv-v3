@@ -1,5 +1,5 @@
 import { getParks, isContinental, parkCount, CONTINENTAL_BOUNDS, parkSearchText, sortByVisits, visitsLabel, getVisitation } from "@/lib/content";
-import { allParkHeroes, parkHero } from "@/lib/hero";
+import { allParkHeroes, getParkHeroes } from "@/lib/hero";
 import { PageHero } from "@/components/hero/PageHero";
 import { SplitLayout } from "@/components/explorer/SplitLayout";
 import { ExplorerItem, ExplorerSearch } from "@/components/explorer/Explorer";
@@ -11,13 +11,14 @@ import { ConditionPills } from "@/components/conditions/ConditionPills";
 
 const short = (name: string) => name.replace(/ National Parks?( and Preserve)?$/, "").replace(/^National Park of /, "");
 
-export default function Home() {
+export default async function Home() {
   const parks = sortByVisits(getParks());
   const year = getVisitation().year;
   const rank = new Map(parks.map((p, i) => [p.code, i + 1]));
   const continental = parks.filter(isContinental);
   const other = parks.filter((p) => !isContinental(p));
-  const heroes = allParkHeroes();
+  const heroes = await allParkHeroes();
+  const heroMap = await getParkHeroes();
 
   const Item = ({ p }: { p: (typeof parks)[number] }) => (
     <ExplorerItem
@@ -32,7 +33,7 @@ export default function Home() {
 
   return (
     <>
-      <PageHero random={heroes} withSplit eyebrow="TrailsTV" title="Viewing America's National Parks" subtitle="Camping, Trails, Paddling, Snow and Live Conditions for every National Park." />
+      <PageHero random={heroes} withSplit eyebrow="TrailsTV" title="Viewing America's national parks" subtitle="Trails, paddling, climbing, snow and live conditions for every national park." />
 
       <SplitLayout
         map={
@@ -46,7 +47,7 @@ export default function Home() {
               id: p.code, lat: p.lat, lon: p.lon, kind: "park" as const, label: p.name, href: `/parks/${p.code}`,
               detail: [`#${rank.get(p.code)} most visited`, p.states.join(", "), visitsLabel(p.code) && `${visitsLabel(p.code)} visits`].filter(Boolean).join(" · "),
               blurb: p.tagline || undefined,
-              image: parkHero(p)?.src,
+              image: heroMap.get(p.code)?.src,
             }))}
           />
         }
@@ -64,7 +65,7 @@ export default function Home() {
       <div className="container home-below">
         <ConditionPills />
         <HomeVideo />
-        <TopThrees groups={getTopThrees()} />
+        <TopThrees groups={await getTopThrees()} />
       </div>
     </>
   );

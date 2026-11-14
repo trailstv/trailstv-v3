@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { cache } from "react";
 import type { Park } from "./types";
+import { getParks } from "./content";
 
 /**
  * Hero images live in /public/images:
@@ -45,17 +46,58 @@ function find(dir: string, base: string): HeroImage | null {
   return file ? { src: `/images/${dir}/${file}`, credit: credits(dir)[file] } : null;
 }
 
-/** The park's own hero image, also accepting its 4-letter code as the file name (acad.jpg). */
-export function parkHero(p: Pick<Park, "name" | "code">): HeroImage | null {
-  return find("parks", parkSlug(p)) ?? find("parks", p.code);
+/* ------------------------------ NPS photos (live) ------------------------------ */
+
+interface NpsImg { url: string; credit: string; altText: string; caption: string }
+/** Public domain only: skip © / "courtesy of" / "all rights reserved" credits. */
+const usable = (i: NpsImg) => /^https:\/\//.test(i.url) && !/©|\(c\)|copyright|all rights reserved|courtesy/i.test(`${i.credit} ${i.caption}`);
+const creditLine = (c: string) => { const t = (c || "NPS").replace(/\s+/g, " ").trim(); return /^photo/i.test(t) ? t : `Photo: ${t}`; };
+
+/**
+ * For parks without a photo of yours in public/images/parks, use the park's own photo from the
+ * NPS API (public domain, photographer credited). One request for all parks, cached for a day.
+ * Needs NPS_API_KEY; without it those parks show the plain gradient header.
+ */
+const npsPhotos = cache(async (codeList: string): Promise<Map<string, HeroImage>> => {
+  const codes = codeList ? codeList.split(",") : [];
+  const key = process.env.NPS_API_KEY;
+  const out = new Map<string, HeroImage>();
+  if (!key || !codes.length) return out;
+  try {
+    const q = new URLSearchParams({ parkCode: codes.join(","), limit: "100", fields: "images", api_key: key });
+    const r = await fetch(`https://developer.nps.gov/api/v1/parks?${q}`, { next: { revalidate: 86400 }, signal: AbortSignal.timeout(10000) });
+    if (!r.ok) return out;
+    const j = (await r.json()) as { data?: { parkCode: string; images?: NpsImg[] }[] };
+    for (const d of j.data ?? []) {
+      const img = (d.images ?? []).find(usable);
+      if (img) out.set(d.parkCode, { src: img.url, credit: creditLine(img.credit) });
+    }
+  } catch { /* fall back to the gradient */ }
+  return out;
+});
+
+/** Hero photo for every park: your own file first, else the NPS photo. */
+export const getParkHeroes = cache(async (): Promise<Map<string, HeroImage>> => {
+  const parks = getParks();
+  const mine = new Map(parks.flatMap((p) => { const h = find("parks", parkSlug(p)) ?? find("parks", p.code); return h ? [[p.code, h] as const] : []; }));
+  const nps = await npsPhotos(parks.filter((p) => !mine.has(p.code)).map((p) => p.code).sort().join(","));
+  return new Map(parks.flatMap((p) => { const h = mine.get(p.code) ?? nps.get(p.code); return h ? [[p.code, h] as const] : []; }));
+});
+
+/** The park's hero image (yours, else the NPS photo). */
+export async function parkHero(p: Pick<Park, "code">): Promise<HeroImage | null> {
+  return (await getParkHeroes()).get(p.code) ?? null;
 }
 
-/** Every park image, for the homepage's random hero. */
-export function allParkHeroes(): HeroImage[] {
-  return listDir("parks").map((f) => ({ src: `/images/parks/${f}`, credit: credits("parks")[f] }));
+/** Every park image, for the random headers. */
+export async function allParkHeroes(): Promise<HeroImage[]> {
+  return [...(await getParkHeroes()).values()];
 }
 
 /** Activity image, else the image of the first park offering it that has one. */
-export function activityHero(slug: string, parks: Pick<Park, "name" | "code">[]): HeroImage | null {
-  return find("activities", slug) ?? parks.map(parkHero).find(Boolean) ?? null;
+export async function activityHero(slug: string, parks: Pick<Park, "code">[]): Promise<HeroImage | null> {
+  const own = find("activities", slug);
+  if (own) return own;
+  const all = await getParkHeroes();
+  return parks.map((p) => all.get(p.code)).find(Boolean) ?? null;
 }
