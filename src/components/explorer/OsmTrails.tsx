@@ -75,7 +75,7 @@ export function OsmTrailList({ initial = 25 }: { initial?: number }) {
   const [showAll, setShowAll] = useState(false);
   if (!osm) return null;
   if (!osm.loaded) return <div className="list-empty">Loading trails…</div>;
-  if (!osm.features.length) return <div className="list-empty">Trails for this park haven&apos;t been imported yet (run <code>npm run sync:trails</code>).</div>;
+  if (!osm.features.length) return <div className="list-empty">The trail list for this park isn&apos;t available right now. Please check back soon.</div>;
   if (!osm.visible.length) return <div className="list-empty">No trails here are marked for {osm.selected.map((u) => USE_LABELS[u].label.toLowerCase()).join(" + ")}. Many park trails don&apos;t allow bikes or dogs.</div>;
   const list = showAll ? osm.visible : osm.visible.slice(0, initial);
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSession, signOut } from "@/lib/auth-client";
+import { useSession } from "@/lib/auth-client";
 
 export function UserMenu() {
   const { data, isPending } = useSession();
@@ -12,9 +12,6 @@ export function UserMenu() {
       <Link href="/trips">Trips</Link>
       <Link href="/me">My Parks</Link>
       {(data.user as { role?: string }).role === "admin" && <Link href="/admin">Admin</Link>}
-      <button type="button" className="linkish" style={{ color: "#fff" }} onClick={() => signOut().then(() => (window.location.href = "/"))}>
-        Sign out
-      </button>
     </>
   );
 }

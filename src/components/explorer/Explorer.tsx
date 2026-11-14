@@ -47,9 +47,17 @@ export function ExplorerItem({
   const ref = useRef<HTMLAnchorElement & HTMLDivElement>(null);
   const isActive = ex?.active === id;
 
-  // A pin was clicked → bring this row into view.
+  // A pin was hovered/clicked → scroll the list (not the page) so this row is visible.
   useEffect(() => {
-    if (isActive && ex?.source === "map") ref.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    if (!isActive || ex?.source !== "map" || !ref.current) return;
+    const row = ref.current;
+    let box = row.parentElement;
+    while (box && !/(auto|scroll)/.test(getComputedStyle(box).overflowY)) box = box.parentElement;
+    if (!box) return;
+    const r = row.getBoundingClientRect(), b = box.getBoundingClientRect();
+    if (r.top < b.top + 8 || r.bottom > b.bottom - 8) {
+      box.scrollTo({ top: box.scrollTop + (r.top - b.top) - b.height / 2 + r.height / 2, behavior: "smooth" });
+    }
   }, [isActive, ex?.source]);
 
   const q = ex?.query.trim().toLowerCase();
@@ -60,6 +68,7 @@ export function ExplorerItem({
     className: `list-item${isActive ? " active" : ""}`,
     onMouseEnter: () => ex?.setActive(id, "list"),
     onFocus: () => ex?.setActive(id, "list"),
+    // Clears the row/pin highlight; an open info popup stays until another pin or row takes over.
     onMouseLeave: () => ex?.source === "list" && ex.setActive(null, "list"),
   };
   const body = (

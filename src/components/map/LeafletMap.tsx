@@ -25,6 +25,10 @@ export interface MapMarker {
   label: string;
   href?: string;
   detail?: string;
+  /** Optional second line in the info popup (e.g. a park's tagline). */
+  blurb?: string;
+  /** Optional photo shown at the top of the info popup. */
+  image?: string;
   difficulty?: string;
 }
 
@@ -117,11 +121,19 @@ function ActiveSync({ refs }: { refs: React.RefObject<Map<string, L.Marker>> }) 
 
 function MarkerPopup({ m }: { m: MapMarker }) {
   return (
-    <Popup>
-      <strong>{m.href ? <a href={m.href}>{m.label}</a> : m.label}</strong>
-      {m.detail && <div style={{ marginTop: 4 }}>{m.detail}</div>}
-      <div style={{ marginTop: 6 }}>
-        <a href={googleDirections({ lat: m.lat, lon: m.lon })} target="_blank" rel="noopener">🧭 Directions</a>
+    <Popup className={m.image ? "info-popup has-image" : "info-popup"} autoPanPadding={[24, 24]} maxWidth={260} minWidth={m.image ? 240 : 50}>
+      {m.image && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={m.image} alt="" className="info-popup-img" loading="lazy" />
+      )}
+      <div className="info-popup-body">
+        <strong>{m.href ? <a href={m.href}>{m.label}</a> : m.label}</strong>
+        {m.detail && <div className="info-popup-detail">{m.detail}</div>}
+        {m.blurb && <div className="info-popup-blurb">{m.blurb}</div>}
+        <div className="info-popup-links">
+          {m.href && <a href={m.href}>View →</a>}
+          <a href={googleDirections({ lat: m.lat, lon: m.lon })} target="_blank" rel="noopener">🧭 Directions</a>
+        </div>
       </div>
     </Popup>
   );
@@ -158,6 +170,8 @@ export default function LeafletMap({ center, zoom = 10, markers = [], line: sing
   const ex = useExplorer();
   const refs = useRef(new Map<string, L.Marker>());
   const active = ex?.active ?? null;
+  const activeRef = useRef(active);
+  activeRef.current = active;
   // A list item can target one pin (id) or a group of pins (e.g. an activity).
   const osm = useOsmTrails();
   const useFilter = osm?.selected ?? [];
@@ -193,7 +207,13 @@ export default function LeafletMap({ center, zoom = 10, markers = [], line: sing
                   opacity={groupActive && !hit ? 0.3 : 1}
                   zIndexOffset={hit ? 1000 : 0}
                   ref={(r) => { if (m.id) { if (r) refs.current.set(m.id, r); else refs.current.delete(m.id); } }}
-                  eventHandlers={{ click: () => m.id && ex?.setActive(m.id, "map") }}
+                  eventHandlers={{
+                    // Hover (or tap) a pin: open its info popup and highlight + scroll to its row in the list.
+                    // Open the popup first: that closes the previous one, whose popupclose clears the old highlight.
+                    mouseover: (e) => { if (!m.id) return; e.target.openPopup(); ex?.setActive(m.id, "map"); },
+                    click: (e) => { if (!m.id) return; e.target.openPopup(); ex?.setActive(m.id, "map"); },
+                    popupclose: () => { if (m.id && activeRef.current === m.id) ex?.setActive(null, "map"); },
+                  }}
                 >
                   <MarkerPopup m={m} />
                 </Marker>
