@@ -4,6 +4,9 @@ import { headers } from "next/headers";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
+import { captcha } from "better-auth/plugins";
+import { botGuard } from "./bot-guard";
+import { adminEmails } from "./owner";
 import { db, schema } from "./db";
 
 /**
@@ -48,7 +51,7 @@ function createAuth() {
     // BETTER_AUTH_SECRET and BETTER_AUTH_URL are read from the environment.
     database: drizzleAdapter(db, {
       provider: "pg",
-      schema: { user: schema.user, session: schema.session, account: schema.account, verification: schema.verification },
+      schema: { user: schema.user, session: schema.session, account: schema.account, verification: schema.verification, rateLimit: schema.rateLimit },
       transaction: false, // Neon HTTP driver: no interactive transactions
     }),
     emailAndPassword: { enabled: true, minPasswordLength: 8 },
@@ -59,8 +62,38 @@ function createAuth() {
       },
     },
     socialProviders: google,
+    // The owner (and ADMIN_EMAILS) become admins the moment their account is created.
+    databaseHooks: {
+      user: {
+        create: {
+          before: async (u) => (adminEmails().includes(String(u.email).toLowerCase()) ? { data: { ...u, role: "admin" } } : undefined),
+        },
+      },
+    },
     session: { expiresIn: 60 * 60 * 24 * 30, cookieCache: { enabled: true, maxAge: 300 } },
-    plugins: [nextCookies()], // must be last
+
+    // --- Spam protection (see src/lib/bot-guard.ts) ---
+    // 2. Rate limits per IP address, stored in Neon so every Vercel function shares the count.
+    rateLimit: {
+      enabled: true,
+      storage: "database",
+      window: 60,
+      max: 100,
+      customRules: {
+        "/sign-in/email": { window: 60, max: 5 }, // 5 password attempts a minute
+        "/sign-up/email": { window: 60 * 60, max: 5 }, // 5 new accounts an hour
+        "/sign-in/social": { window: 60, max: 10 },
+      },
+    },
+    // 1. Hidden trap field + "filled in too fast" check on the email forms.
+    hooks: { before: botGuard },
+    plugins: [
+      // 3. Cloudflare Turnstile, switched on by setting TURNSTILE_SECRET_KEY (+ TURNSTILE_SITE_KEY).
+      ...(process.env.TURNSTILE_SECRET_KEY
+        ? [captcha({ provider: "cloudflare-turnstile", secretKey: process.env.TURNSTILE_SECRET_KEY, endpoints: ["/sign-up/email", "/sign-in/email"] })]
+        : []),
+      nextCookies(), // must be last
+    ],
   });
 }
 
@@ -74,8 +107,6 @@ export const googleEnabled = () => Boolean(process.env.GOOGLE_CLIENT_ID && proce
 
 export type SessionUser = { id: string; name: string; email: string; image?: string | null; role: "user" | "admin" };
 
-/** Bootstrap admins by email (comma-separated), e.g. ADMIN_EMAILS=you@example.com */
-const adminEmails = () => (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
 
 /** Current signed-in user (deduped per request), or null. */
 export const getUser = cache(async (): Promise<SessionUser | null> => {

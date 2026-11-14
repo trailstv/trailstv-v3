@@ -6,11 +6,11 @@ import { z } from "zod";
 import { db, schema } from "./db";
 import { getUser, type SessionUser } from "./auth";
 import { getPark } from "./content";
+import { adminEmails, isOwnerEmail } from "./owner";
 import { customerIdForUser, getUserEntitlements } from "./billing";
 
 /* --------------------------------- Guards --------------------------------- */
 
-const adminEmails = () => (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
 
 /**
  * Re-checks the role in the database on every admin request (not the 5-minute
@@ -103,6 +103,10 @@ export async function revokeGrant(actor: SessionUser, grantId: string) {
 
 export async function setRole(actor: SessionUser, userId: string, role: "user" | "admin") {
   if (actor.id === userId && role !== "admin") throw new Error("You can't remove your own admin role");
+  if (role !== "admin") {
+    const [target] = await db!.select({ email: schema.user.email }).from(schema.user).where(eq(schema.user.id, userId)).limit(1);
+    if (isOwnerEmail(target?.email)) throw new Error("The site owner is always an admin");
+  }
   const [row] = await db!.update(schema.user).set({ role, updatedAt: new Date() }).where(eq(schema.user.id, userId)).returning({ id: schema.user.id, email: schema.user.email });
   if (!row) throw new Error("User not found");
   await audit(actor, "role.set", userId, { role, email: row.email });

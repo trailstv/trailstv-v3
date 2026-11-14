@@ -1,4 +1,4 @@
-import { pgTable, text, integer, timestamp, jsonb, uuid, date, index, primaryKey, boolean, doublePrecision } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, bigint, timestamp, jsonb, uuid, date, index, primaryKey, boolean, doublePrecision } from "drizzle-orm/pg-core";
 
 /**
  * Flat files hold the canonical, slow-changing catalog (parks, trails, activities).
@@ -18,6 +18,14 @@ export const user = pgTable("user", {
   role: text("role").default("user").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+/** Better Auth rate limiting (sign-in / sign-up attempts per IP). Stored in the DB because serverless functions don't share memory. */
+export const rateLimit = pgTable("rate_limit", {
+  id: text("id").primaryKey(),
+  key: text("key").notNull().unique(),
+  count: integer("count").notNull(),
+  lastRequest: bigint("last_request", { mode: "number" }).notNull(),
 });
 
 export const session = pgTable(
