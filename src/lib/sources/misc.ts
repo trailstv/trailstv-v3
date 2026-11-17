@@ -9,11 +9,41 @@ export function getAirQuality(lat: number, lon: number) {
   const ATTR = "U.S. EPA AirNow";
   const key = process.env.AIRNOW_API_KEY;
   if (!key) return Promise.resolve(missingKey<AirReading[]>("airnow", ATTR, "AIRNOW_API_KEY"));
-  const q = new URLSearchParams({ format: "application/json", latitude: String(lat), longitude: String(lon), distance: "75", API_KEY: key });
-  type Raw = { ParameterName: string; AQI: number; Category: { Name: string }; ReportingArea: string; DateObserved: string; HourObserved: number }[];
-  return fetchSource<Raw, AirReading[]>("airnow", ATTR, `https://www.airnowapi.org/aq/observation/latLong/current/?${q}`, { revalidate: 1800 }, (r) =>
-    r.map((x) => ({ parameter: x.ParameterName, aqi: x.AQI, category: x.Category.Name, reportingArea: x.ReportingArea, observedAt: `${x.DateObserved.trim()} ${x.HourObserved}:00` })),
-  );
+  // AirNow retired /aq/observation/latLong/current/ on 2026-09-30 (it now answers HTTP 410).
+  // Replacement: /aq/observation/current/ziplatlong/ — one row per monitor and pollutant, flat camelCase fields.
+  const q = new URLSearchParams({ format: "application/json", latitude: lat.toFixed(4), longitude: lon.toFixed(4), distance: "75", API_KEY: key });
+  type Row = { parameterName?: string; nowcastAQI?: number | string; aqiCategoryName?: string; reportingAreaName?: string; siteName?: string; dateObserved?: string; hourObserved?: string | number; localTimeZone?: string };
+  type Raw = Row[] | { WebServiceError?: unknown };
+  return fetchSource<Raw, AirReading[]>("airnow", ATTR, `https://www.airnowapi.org/aq/observation/current/ziplatlong/?${q}`, { revalidate: 1800 }, (r) => {
+    if (!Array.isArray(r)) return []; // {"WebServiceError": [...]} = no monitor reporting near this point
+    // Keep the highest reading per pollutant across nearby monitors.
+    const best = new Map<string, AirReading>();
+    for (const x of r) {
+      const aqi = Number(x.nowcastAQI);
+      if (!x.parameterName || !Number.isFinite(aqi) || aqi < 0) continue;
+      const parameter = POLLUTANT[x.parameterName.toUpperCase()] ?? x.parameterName;
+      const reading: AirReading = {
+        parameter, aqi, category: x.aqiCategoryName || aqiCategory(aqi),
+        reportingArea: x.reportingAreaName || x.siteName || "",
+        observedAt: [x.dateObserved?.trim(), typeof x.hourObserved === "number" ? `${x.hourObserved}:00` : x.hourObserved, x.localTimeZone].filter(Boolean).join(" "),
+      };
+      const prev = best.get(parameter);
+      if (!prev || reading.aqi > prev.aqi) best.set(parameter, reading);
+    }
+    return [...best.values()].sort((a, b) => b.aqi - a.aqi);
+  });
+}
+
+const POLLUTANT: Record<string, string> = { OZONE: "O3", O3: "O3", "PM2.5": "PM2.5", PM25: "PM2.5", PM10: "PM10" };
+
+/** EPA AQI categories (the new AirNow rows sometimes omit the name). */
+export function aqiCategory(aqi: number): string {
+  if (aqi <= 50) return "Good";
+  if (aqi <= 100) return "Moderate";
+  if (aqi <= 150) return "Unhealthy for Sensitive Groups";
+  if (aqi <= 200) return "Unhealthy";
+  if (aqi <= 300) return "Very Unhealthy";
+  return "Hazardous";
 }
 
 /* ---------------- NIFC wildfire perimeters ---------------- */
