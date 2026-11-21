@@ -69,6 +69,22 @@ BEGIN
     "created_at" timestamp with time zone DEFAULT now() NOT NULL,
     CONSTRAINT "customers_user_id_unique" UNIQUE("user_id")
   );
+  CREATE TABLE IF NOT EXISTS "partner_inquiries" (
+    "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+    "created_at" timestamp with time zone DEFAULT now() NOT NULL,
+    "name" text NOT NULL,
+    "email" text NOT NULL,
+    "organization" text NOT NULL,
+    "website" text,
+    "kind" text NOT NULL,
+    "interests" jsonb DEFAULT '[]'::jsonb NOT NULL,
+    "parks" text,
+    "budget" text,
+    "message" text NOT NULL,
+    "status" text DEFAULT 'new' NOT NULL,
+    "ip_hash" text,
+    "user_id" text
+  );
   CREATE TABLE IF NOT EXISTS "purchases" (
     "checkout_session_id" text PRIMARY KEY NOT NULL,
     "stripe_customer_id" text NOT NULL,
@@ -191,6 +207,7 @@ BEGIN
   BEGIN ALTER TABLE "audit_log" ADD CONSTRAINT "audit_log_actor_id_user_id_fk" FOREIGN KEY ("actor_id") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action; EXCEPTION WHEN duplicate_object THEN NULL; END;
   BEGIN ALTER TABLE "completions" ADD CONSTRAINT "completions_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action; EXCEPTION WHEN duplicate_object THEN NULL; END;
   BEGIN ALTER TABLE "customers" ADD CONSTRAINT "customers_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action; EXCEPTION WHEN duplicate_object THEN NULL; END;
+  BEGIN ALTER TABLE "partner_inquiries" ADD CONSTRAINT "partner_inquiries_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action; EXCEPTION WHEN duplicate_object THEN NULL; END;
   BEGIN ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action; EXCEPTION WHEN duplicate_object THEN NULL; END;
   BEGIN ALTER TABLE "trip_reports" ADD CONSTRAINT "trip_reports_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action; EXCEPTION WHEN duplicate_object THEN NULL; END;
   BEGIN ALTER TABLE "trip_stops" ADD CONSTRAINT "trip_stops_trip_id_trips_id_fk" FOREIGN KEY ("trip_id") REFERENCES "public"."trips"("id") ON DELETE cascade ON UPDATE no action; EXCEPTION WHEN duplicate_object THEN NULL; END;
@@ -202,6 +219,8 @@ BEGIN
   CREATE INDEX IF NOT EXISTS "audit_log_target_idx" ON "audit_log" USING btree ("target_user_id");
   CREATE INDEX IF NOT EXISTS "completions_user_idx" ON "completions" USING btree ("user_id","kind","ref_id");
   CREATE INDEX IF NOT EXISTS "snapshots_lookup_idx" ON "condition_snapshots" USING btree ("park_code","source","fetched_at");
+  CREATE INDEX IF NOT EXISTS "partner_inquiries_created_idx" ON "partner_inquiries" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "partner_inquiries_ip_idx" ON "partner_inquiries" USING btree ("ip_hash","created_at");
   CREATE INDEX IF NOT EXISTS "purchases_customer_idx" ON "purchases" USING btree ("stripe_customer_id");
   CREATE INDEX IF NOT EXISTS "purchases_pi_idx" ON "purchases" USING btree ("payment_intent_id");
   CREATE INDEX IF NOT EXISTS "session_user_idx" ON "session" USING btree ("user_id");
