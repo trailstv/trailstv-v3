@@ -54,7 +54,7 @@ export default async function ConditionTypePage({ params }: { params: Promise<{ 
         }
         head={
           <>
-            <h2 style={{ marginBottom: ".25rem" }}>{r.ok ? (r.parks.length ? `${r.parks.length} park${r.parks.length === 1 ? "" : "s"} affected` : "All clear") : "Data unavailable"}</h2>
+            <h2 style={{ marginBottom: ".25rem" }}>{r.ok ? (r.parks.length ? `${r.parks.length} Park${r.parks.length === 1 ? "" : "s"} Affected` : "All Clear") : "Data Unavailable"}</h2>
             <p className="small muted" style={{ margin: "0 0 .5rem" }}>Checked {r.checked} parks · updated {time(r.fetchedAt)}</p>
             {r.parks.length > 6 && <ExplorerSearch placeholder="Search parks or states" />}
           </>

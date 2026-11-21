@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { adminStats } from "@/lib/admin";
+import { countNewInquiries } from "@/lib/partners-server";
 
 const money = (cents: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(cents / 100);
 
 export default async function AdminHome() {
   const s = await adminStats();
+  const partners = await countNewInquiries().catch(() => 0);
   return (
     <>
       <h1>Overview</h1>
@@ -15,12 +17,13 @@ export default async function AdminHome() {
         <div className="card"><b>{s.compPlus}</b><span className="small muted">complimentary TrailsTV+</span></div>
         <div className="card"><b>{s.packsSold}</b><span className="small muted">park packs sold ({money(s.packRevenueCents)})</span></div>
         <div className="card"><b>{s.compPacks}</b><span className="small muted">complimentary packs</span></div>
+        <Link href="/admin/partners" className="card"><b>{partners}</b><span className="small muted">new partner messages</span></Link>
       </div>
       <p className="small muted" style={{ marginTop: ".75rem" }}>
         Subscription revenue, payouts and refunds live in your <a href="https://dashboard.stripe.com" target="_blank" rel="noopener">Stripe Dashboard</a>.
       </p>
 
-      <h2>Newest users</h2>
+      <h2>Newest Users</h2>
       <div className="table-wrap">
         <table className="admin-table">
           <thead><tr><th>Name</th><th>Email</th><th>Joined</th></tr></thead>

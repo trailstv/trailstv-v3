@@ -1,3 +1,4 @@
+import { titleCase } from "@/lib/title-case";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllStatusReports, STATUS_TYPES } from "@/lib/park-status";
@@ -23,7 +24,7 @@ export default async function ConditionsIndex() {
             return (
               <section key={r.type} className="card cond-card">
                 <div className="cond-card-head">
-                  <h2><span aria-hidden="true">{t.icon}</span> {t.label}</h2>
+                  <h2><span aria-hidden="true">{t.icon}</span> {titleCase(t.label)}</h2>
                   <span className={`badge${r.parks.length ? (r.parks.some((p) => p.level === "high") ? " hard" : " warn") : ""}`}>{r.ok ? (r.parks.length ? `${r.parks.length} park${r.parks.length === 1 ? "" : "s"}` : "All clear") : "Unavailable"}</span>
                 </div>
                 {!r.ok ? (

@@ -34,7 +34,7 @@ export default async function AdminUser({ params, searchParams }: { params: Prom
       </p>
       <Notice notice={notice} error={error} />
 
-      <h2>Current access</h2>
+      <h2>Current Access</h2>
       <div className="card">
         <p style={{ marginTop: 0 }}>
           {user.role === "admin" && <span className="tier admin">Admin</span>}
@@ -50,14 +50,14 @@ export default async function AdminUser({ params, searchParams }: { params: Prom
         </p>
       </div>
 
-      <h2>Give free access</h2>
+      <h2>Give Free Access</h2>
       <GrantForm
         userId={user.id}
         parks={getParks().map((p) => ({ code: p.code, name: p.name }))}
         durations={Object.entries(GRANT_DURATIONS).map(([key, v]) => ({ key, label: v.label }))}
       />
 
-      <h2>Complimentary access history</h2>
+      <h2>Complimentary Access History</h2>
       {grants.length ? (
         <div className="table-wrap">
           <table className="admin-table">
@@ -113,7 +113,7 @@ export default async function AdminUser({ params, searchParams }: { params: Prom
         )}
       </form>
 
-      <h2>Admin activity on this user</h2>
+      <h2>Admin Activity on This User</h2>
       {log.length ? (
         <ul className="small">
           {log.map((l) => <li key={l.id}>{l.createdAt.toLocaleString("en-US")} · <b>{l.action}</b> by {l.actorEmail} <span className="muted">{JSON.stringify(l.details)}</span></li>)}

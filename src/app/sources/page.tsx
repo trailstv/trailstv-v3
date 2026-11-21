@@ -10,7 +10,7 @@ export default async function SourcesPage() {
     <>
       <PageHero random={await allParkHeroes()} eyebrow="About the data" title="Sources & credits" subtitle="TrailsTV is built on public data from federal agencies and the OpenStreetMap community." />
       <div className="container" style={{ maxWidth: 900, marginTop: "1.5rem" }}>
-        <h2>Data sources</h2>
+        <h2>Data Sources</h2>
         <div className="table-wrap">
           <table className="admin-table">
             <thead><tr><th>Source</th><th>Used for</th><th>License</th></tr></thead>
@@ -38,7 +38,7 @@ export default async function SourcesPage() {
           </table>
         </div>
 
-        <h2>Good to know</h2>
+        <h2>Good to Know</h2>
         <div className="card">
           <ul style={{ margin: 0, paddingLeft: "1.1rem", display: "grid", gap: ".6rem" }}>
             <li>TrailsTV is independent and not affiliated with or endorsed by the National Park Service.</li>

@@ -103,7 +103,7 @@ export default async function TrailPage({ params }: { params: Promise<{ id: stri
         <ExplorerItem id={trail.id} icon="📍" title={trail.trailhead.name} meta="Trailhead · hover to show on map" />
         {(trail.uses?.length ?? 0) > 0 && (
           <div className="split-section">
-            <h3>Allowed uses</h3>
+            <h3>Allowed Uses</h3>
             <div className="chips" style={{ margin: 0 }}>{trail.uses!.map((u) => <span key={u} className="chip">{USE_CHIPS[u] ?? u}</span>)}</div>
             {trail.source === "nps" && <p className="small muted" style={{ marginBottom: 0 }}>From NPS trail records. Check posted rules at the trailhead.</p>}
           </div>
@@ -122,7 +122,7 @@ export default async function TrailPage({ params }: { params: Promise<{ id: stri
         {!trail.verified && <div className="split-section"><p className="small muted" style={{ margin: 0 }}>{trail.source === "nps" ? "Route and length from National Park Service trail data. Elevation and difficulty are added as they're measured." : "Trail stats are preliminary and being verified."}</p></div>}
         {others.length > 0 && (
           <>
-            <div className="split-section" style={{ paddingBottom: ".5rem" }}><h3 style={{ margin: 0 }}>Nearby trails in {park.name.replace(/ National Parks?( and Preserve)?$/, "")}</h3></div>
+            <div className="split-section" style={{ paddingBottom: ".5rem" }}><h3 style={{ margin: 0 }}>Nearby Trails in {park.name.replace(/ National Parks?( and Preserve)?$/, "")}</h3></div>
             {others.map((o) => (
               <ExplorerItem key={o.id} id={o.id} href={`/trails/${o.id}`} icon={diffIcon(o.difficulty)} title={o.name} meta={trailMeta(o)} />
             ))}
@@ -131,10 +131,10 @@ export default async function TrailPage({ params }: { params: Promise<{ id: stri
       </SplitLayout>
 
       <div className="container">
-      <h2>Trailhead conditions</h2>
+      <h2>Trailhead Conditions</h2>
       <div className="panel-grid">
         <div className="card panel" style={{ gridColumn: "1 / -1" }}>
-          <h3>🌤️ Forecast at trailhead</h3>
+          <h3>🌤️ Forecast at Trailhead</h3>
           {forecast.ok && forecast.data ? (
             <div className="forecast">
               {forecast.data.periods.slice(0, 8).map((p) => (
@@ -151,7 +151,7 @@ export default async function TrailPage({ params }: { params: Promise<{ id: stri
           <div className="src">Source: {forecast.attribution}</div>
         </div>
         <div className="card panel">
-          <h3>🔥 Wildfires nearby</h3>
+          <h3>🔥 Wildfires Nearby</h3>
           {fires.ok && fires.data ? (
             fires.data.length ? (
               <ul>{fires.data.map((f) => <li key={f.name}><b>{f.name}</b>: {f.acres ? `${Math.round(f.acres).toLocaleString()} ac` : "size n/a"}{f.containment != null && `, ${f.containment}% contained`}</li>)}</ul>
@@ -161,7 +161,7 @@ export default async function TrailPage({ params }: { params: Promise<{ id: stri
         </div>
         {gauge && (
           <div className="card panel">
-            <h3>🌊 River gauge</h3>
+            <h3>🌊 River Gauge</h3>
             {gauge.ok && gauge.data?.length ? (
               <ul>{gauge.data.map((g) => <li key={g.parameter}>{g.parameter}: <b>{g.value} {g.unit}</b></li>)}</ul>
             ) : <p className="err">Unavailable: {gauge.error ?? "no data"}</p>}
@@ -170,7 +170,7 @@ export default async function TrailPage({ params }: { params: Promise<{ id: stri
         )}
       </div>
 
-      <h2>Trip reports</h2>
+      <h2>Trip Reports</h2>
       <Reports parkCode={park.code} trailId={trail.id} />
       <div style={{ marginTop: "1rem", maxWidth: 560 }}>
         <ReportForm parkCode={park.code} trailId={trail.id} activities={activities.map(({ slug, name }) => ({ slug, name }))} />

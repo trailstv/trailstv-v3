@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { canUse, FEATURE_COPY } from "@/lib/paywall";
+import { Teaser, UpgradeBox } from "@/components/paywall/UpgradeBox";
 import { SignOutButton } from "@/components/SignOutButton";
 import { getCampground } from "@/lib/campgrounds";
 import { PageHero } from "@/components/hero/PageHero";
@@ -49,6 +51,7 @@ export default async function MePage() {
     .map((p) => ({ lat: p.lat, lon: p.lon, kind: visited.has(p.code) ? "park" : "viewpoint", label: p.name, href: `/parks/${p.code}`, detail: visited.has(p.code) ? "Visited ✓" : "Saved: want to go" }));
   const pct = Math.round((d.stats.parksVisited / Math.max(d.stats.parksTotal, 1)) * 100);
   const trailLog = d.completions.filter((c) => c.kind === "trail");
+  const unlocked = await canUse("saving");
 
   return (
     <>
@@ -65,6 +68,18 @@ export default async function MePage() {
         </div>
       </div>
 
+      {!unlocked && (
+        <Teaser box={<UpgradeBox title={FEATURE_COPY.saving.title} text={`${FEATURE_COPY.saving.text}${d.favorites.length + d.saved.length + d.trips.length ? " Everything you saved before is kept and comes back when you join." : ""}`} next="/me" />}>
+          <div className="stat-row" style={{ marginTop: "1rem" }}>
+            {["parks visited", "trails completed", "trail miles", "feet climbed", "trips planned"].map((l) => <div key={l} className="card"><b>–</b><span className="small muted">{l}</span></div>)}
+          </div>
+          <h2>♥ Favorites</h2>
+          <div className="grid">{["Zion", "Yosemite", "Glacier"].map((n) => <div key={n} className="card"><h3>{n}</h3><p className="muted small">Saved park</p></div>)}</div>
+          <h2>🔖 Saved: Want to Go</h2>
+          <div className="grid">{["Angels Landing", "Mist Trail", "Highline Trail"].map((n) => <div key={n} className="card"><h3>{n}</h3><p className="muted small">Saved trail</p></div>)}</div>
+        </Teaser>
+      )}
+      {unlocked && <>
       <div className="stat-row" style={{ marginTop: "1rem" }}>
         <div className="card"><b>{d.stats.parksVisited}</b><span className="small muted">parks visited</span></div>
         <div className="card"><b>{d.stats.trailsCompleted}</b><span className="small muted">trails completed</span></div>
@@ -77,7 +92,7 @@ export default async function MePage() {
 
       {markers.length > 0 && (
         <>
-          <h2>Your map</h2>
+          <h2>Your Map</h2>
           <ParkMap center={[39.5, -98.35]} zoom={4} markers={markers} legend={false} height={380} />
           <p className="small muted">🌲 visited · 👁 saved</p>
         </>
@@ -86,7 +101,7 @@ export default async function MePage() {
       <h2>♥ Favorites</h2>
       <ItemGrid items={d.favorites} empty="Tap ♡ Favorite on any park or trail you love." />
 
-      <h2>🔖 Saved: want to go</h2>
+      <h2>🔖 Saved: Want to Go</h2>
       <ItemGrid items={d.saved} empty="Tap 🔖 Save on parks and trails you want to visit." />
 
       <h2>🗺️ Trips</h2>
@@ -96,12 +111,12 @@ export default async function MePage() {
         ))}</div>
       ) : <p className="muted">No trips yet. <Link href="/trips">Plan one →</Link></p>}
 
-      <h2>✓ Parks visited</h2>
+      <h2>✓ Parks Visited</h2>
       {d.visitedParks.length ? (
         <div className="chips">{d.visitedParks.map((v) => <Link key={v.park.code} href={`/parks/${v.park.code}`} className="chip">{v.park.name.replace(" National Park", "")} · {fmt(v.firstVisit)}</Link>)}</div>
       ) : <p className="muted">Mark a park visited, or complete one of its trails.</p>}
 
-      <h2>✓ Completed trails</h2>
+      <h2>✓ Completed Trails</h2>
       {trailLog.length ? (
         <div className="card">
           {trailLog.map((c) => {
@@ -115,6 +130,7 @@ export default async function MePage() {
           })}
         </div>
       ) : <p className="muted">Log a hike with “Mark completed” on any trail.</p>}
+      </>}
     </div>
     </>
   );

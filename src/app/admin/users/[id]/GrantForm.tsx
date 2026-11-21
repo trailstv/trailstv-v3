@@ -10,7 +10,7 @@ export function GrantForm({ userId, parks, durations }: { userId: string; parks:
 
   return (
     <form action="/api/admin/grants" method="post" className="report card" style={{ maxWidth: 520 }}>
-      <h3>Give free access</h3>
+      <h3>Give Free Access</h3>
       <input type="hidden" name="userId" value={userId} />
       <label className="small">What
         <select name="grant" value={grant} onChange={(e) => setGrant(e.target.value)} style={{ width: "100%" }}>
