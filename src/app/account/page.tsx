@@ -61,7 +61,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
             </form>}
           </div>
 
-          <h2>Offline park packs</h2>
+          <h2>Offline Park Packs</h2>
           {ent.plus && <p className="muted small">TrailsTV+ includes every park. Download any park pack from its page.</p>}
           {ent.parkPacks.length ? (
             <div className="grid">

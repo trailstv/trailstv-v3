@@ -39,10 +39,10 @@ export default async function ParksPage({ searchParams }: { searchParams: Promis
             markers={mapParks.map((p) => ({ id: p.code, lat: p.lat, lon: p.lon, kind: "park" as const, label: p.name, href: `/parks/${p.code}${act ? `?activity=${act.slug}` : ""}`, detail: p.states.join(", ") }))}
           />
         }
-        head={<><h2>{parkCount(parks)} parks</h2><ExplorerSearch placeholder="Search parks or states" /></>}
+        head={<><h2>{parkCount(parks)} Parks</h2><ExplorerSearch placeholder="Search parks or states" /></>}
       >
         <div className="split-section">
-          <h3>Filter by activity</h3>
+          <h3>Filter by Activity</h3>
           <div className="chips" style={{ margin: 0 }}>
             <Link href="/parks" className={`chip ${!act ? "active" : ""}`}>All</Link>
             {getActivities().map((a) => (

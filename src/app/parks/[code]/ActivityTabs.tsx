@@ -30,7 +30,7 @@ function Conditions({ parkCode, timeZone, activities }: { parkCode: string; time
   const label = activities.find((a) => a.slug === current);
   return (
     <>
-      <h2>Live conditions{label && <span className="muted" style={{ fontWeight: 400 }}> · {label.icon} {label.name}</span>}</h2>
+      <h2>Live Conditions{label && <span className="muted" style={{ fontWeight: 400 }}> · {label.icon} {label.name}</span>}</h2>
       <ConditionsPanel parkCode={parkCode} activity={current} timeZone={timeZone} />
     </>
   );

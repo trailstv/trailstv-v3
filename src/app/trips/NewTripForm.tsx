@@ -17,7 +17,7 @@ export function NewTripForm() {
   }
   return (
     <form className="report card" onSubmit={submit}>
-      <h3>New trip</h3>
+      <h3>New Trip</h3>
       <input name="name" required maxLength={120} placeholder="e.g. Utah Mighty 5 road trip" />
       <div style={{ display: "flex", gap: 8 }}>
         <label className="small" style={{ flex: 1 }}>Start<br /><input type="date" name="startDate" style={{ width: "100%" }} /></label>

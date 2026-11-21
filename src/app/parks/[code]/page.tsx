@@ -19,7 +19,7 @@ import { getProduct, formatPrice } from "@/lib/products";
 import { getCampgroundsForPark, campMeta, shortCampName } from "@/lib/campgrounds";
 import { featuredVideoSet } from "@/lib/videos";
 import { MediaPane } from "@/components/video/MediaPane";
-import { OsmTrailsProvider, TrailUseFilter, OsmTrailList, UseGate } from "@/components/explorer/OsmTrails";
+import { OsmTrailsProvider, TrailUseFilter, OsmTrailList, UseGate, FeaturedGate, TrailListHeading } from "@/components/explorer/OsmTrails";
 
 export const revalidate = 60;
 
@@ -70,7 +70,7 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
             parkCode={park.code}
             markers={[
               ...trails.map((t) => ({
-                id: t.id, uses: trailUses(t), lat: t.trailhead.lat, lon: t.trailhead.lon, kind: "trailhead" as const, difficulty: t.difficulty ?? undefined,
+                id: t.id, uses: trailUses(t), activities: t.activities, trailType: t.trailType, lat: t.trailhead.lat, lon: t.trailhead.lon, kind: "trailhead" as const, difficulty: t.difficulty ?? undefined,
                 label: t.name, href: `/trails/${t.id}`, detail: trailMeta(t),
               })),
               ...campPins.map((c) => ({ id: c.id, groups: ["camping"], lat: c.lat!, lon: c.lon!, kind: "campground" as const, label: c.name, href: `/campgrounds/${c.id}`, detail: campMeta(c) })),
@@ -95,17 +95,17 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
         )}
 
         <div className="split-section">
-          <h3>Trail use</h3>
+          <h3>Trail Use</h3>
           <TrailUseFilter />
         </div>
 
         {trails.length > 0 && (
-          <>
+          <FeaturedGate trails={trails.map((t) => ({ uses: trailUses(t), activities: t.activities, trailType: t.trailType }))}>
             <div className="split-section" style={{ paddingBottom: ".5rem" }}>
-              <h3 style={{ margin: 0 }}>Featured trails</h3>
+              <h3 style={{ margin: 0 }}>Featured Trails</h3>
             </div>
             {trails.map((t) => (
-              <UseGate key={t.id} uses={trailUses(t)}>
+              <UseGate key={t.id} uses={trailUses(t)} activities={t.activities} trailType={t.trailType}>
                 <ExplorerItem
                   id={t.id}
                   href={`/trails/${t.id}`}
@@ -115,11 +115,11 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
                 />
               </UseGate>
             ))}
-          </>
+          </FeaturedGate>
         )}
 
         <div className="split-section" style={{ paddingBottom: ".5rem" }}>
-          <h3 style={{ margin: 0 }}>All hiking trails</h3>
+          <TrailListHeading />
         </div>
         <OsmTrailList />
 
@@ -131,12 +131,12 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
         )}
 
         <div className="split-section">
-          <h3>Map layers</h3>
+          <h3>Map Layers</h3>
           <MapLegend />
         </div>
 
         <div className="split-section">
-          <h3>📦 Take it offline</h3>
+          <h3>📦 Take It Offline</h3>
           <p className="small muted" style={{ marginTop: 0 }}>Trails, trailheads and GPX for {shortName}, yours to keep. Included with TrailsTV+.</p>
           <BuyButton product="park-pack" parkCode={park.code}>Buy pack · {formatPrice(getProduct("park-pack")!)}</BuyButton>{" "}
           <a href={`/api/parks/${park.code}/pack`} className="small">Already own it?</a>
@@ -147,7 +147,7 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
       <div className="container">
         <LiveConditions parkCode={park.code} timeZone={park.timeZone} activities={chipData} />
 
-        <h2>Trip reports</h2>
+        <h2>Trip Reports</h2>
         <Reports parkCode={park.code} />
         <div style={{ marginTop: "1rem", maxWidth: 560 }}>
           <ReportForm parkCode={park.code} activities={(activities.length ? activities : getActivities().filter((a) => a.slug === "hiking")).map(({ slug, name }) => ({ slug, name }))} />

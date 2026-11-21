@@ -1,4 +1,7 @@
+import { titleCase } from "@/lib/title-case";
 import Link from "next/link";
+import { getAccess, isPaid, FEATURE_COPY } from "@/lib/paywall";
+import { Teaser, UpgradeBox } from "@/components/paywall/UpgradeBox";
 import { getParksForActivityLive } from "@/lib/live-parks";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -11,6 +14,9 @@ import { ExplorerItem, ExplorerSearch } from "@/components/explorer/Explorer";
 import { ParkMap } from "@/components/map/ParkMap";
 import { getAllCampgrounds, campMeta, shortCampName } from "@/lib/campgrounds";
 
+// Rendered per visitor: the page depends on whether they have TrailsTV+.
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return getActivities().map((a) => ({ slug: a.slug }));
 }
@@ -22,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 const LIVE_LABELS: Record<string, string> = {
   weather: "forecast", alerts: "alerts", air: "air quality", fire: "wildfires", sun: "sunrise/sunset", rivers: "river flow", snow: "snowpack",
-  avalanche: "avalanche danger", tides: "tides", campgrounds: "campgrounds", boatLaunches: "boat launches", climbingClosures: "climbing closures", webcams: "webcams",
+  avalanche: "avalanche danger", tides: "tides", campgrounds: "campgrounds", boatLaunches: "boat launches", paddleSpots: "kayak & canoe launches (OpenStreetMap)", climbingClosures: "climbing closures", webcams: "webcams",
 };
 
 export default async function ActivityPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -35,6 +41,25 @@ export default async function ActivityPage({ params }: { params: Promise<{ slug:
   // Camping: every campground in every park, kept on TrailsTV.
   const camps = slug === "camping" ? getAllCampgrounds() : [];
   const shortPark = (code: string) => getPark(code)?.name.replace(/ National Parks?( and Preserve)?$/, "") ?? code;
+
+  // TrailsTV+ only: free visitors see the header and a faded preview with an upgrade box.
+  const access = await getAccess();
+  if (isPaid("activities") && !access.plus) {
+    return (
+      <>
+        <PageHero image={await activityHero(slug, parks)} eyebrow={<Link href="/activities">← All activities</Link>} title={<>{activity.icon} {activity.name}</>} subtitle={activity.description} />
+        <div className="container" style={{ marginTop: "1.5rem" }}>
+          <Teaser box={<UpgradeBox title={FEATURE_COPY.activities.title} text={`${parks.length} parks offer ${activity.name.toLowerCase()}. ${FEATURE_COPY.activities.text}`} signedIn={Boolean(access.user)} next={`/activities/${slug}`} />}>
+            <div className="grid">
+              {parks.slice(0, 9).map((p) => (
+                <div key={p.code} className="card"><h3>{shortPark(p.code)}</h3><p className="muted small">{p.states.join(", ")} · {activity.name}</p></div>
+              ))}
+            </div>
+          </Teaser>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -61,10 +86,10 @@ export default async function ActivityPage({ params }: { params: Promise<{ slug:
             ]}
           />
         }
-        head={<><h2>{camps.length ? `${camps.length} campgrounds in ${new Set(camps.map((c) => c.parkCode)).size} parks` : `${parks.length} park${parks.length === 1 ? "" : "s"} for ${activity.name.toLowerCase()}`}</h2><ExplorerSearch placeholder={camps.length ? "Search campgrounds or parks" : "Search parks"} /></>}
+        head={<><h2>{titleCase(camps.length ? `${camps.length} campgrounds in ${new Set(camps.map((c) => c.parkCode)).size} parks` : `${parks.length} park${parks.length === 1 ? "" : "s"} for ${activity.name}`)}</h2><ExplorerSearch placeholder={camps.length ? "Search campgrounds or parks" : "Search parks"} /></>}
       >
         <div className="split-section">
-          <h3>Live data for {activity.name.toLowerCase()}</h3>
+          <h3>Live Data for {titleCase(activity.name)}</h3>
           <div className="chips" style={{ margin: 0 }}>{activity.conditions.map((c) => <span key={c} className="chip">{LIVE_LABELS[c] ?? c}</span>)}</div>
         </div>
         {camps.length > 0 && (

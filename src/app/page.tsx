@@ -51,12 +51,12 @@ export default async function Home() {
             }))}
           />
         }
-        head={<><h2>National parks <span className="muted small">({parkCount(parks)})</span></h2><p className="small muted" style={{ margin: "-.2rem 0 .5rem" }}>Most visited first · {year} NPS figures</p><ExplorerSearch placeholder="Search parks or states" /></>}
+        head={<><h2>National Parks <span className="muted small">({parkCount(parks)})</span></h2><p className="small muted" style={{ margin: "-.2rem 0 .5rem" }}>Most visited first · {year} NPS figures</p><ExplorerSearch placeholder="Search parks or states" /></>}
       >
         {continental.map((p) => <Item key={p.code} p={p} />)}
         {other.length > 0 && (
           <>
-            <div className="split-section" style={{ paddingBottom: ".4rem" }}><h3 style={{ margin: 0 }}>Alaska, Hawaiʻi & territories</h3></div>
+            <div className="split-section" style={{ paddingBottom: ".4rem" }}><h3 style={{ margin: 0 }}>Alaska, Hawaiʻi & Territories</h3></div>
             {other.map((p) => <Item key={p.code} p={p} />)}
           </>
         )}

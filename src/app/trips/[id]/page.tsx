@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { canUse, FEATURE_COPY } from "@/lib/paywall";
+import { UpgradeBox } from "@/components/paywall/UpgradeBox";
 import { getCampground } from "@/lib/campgrounds";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -24,6 +26,17 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
   const data = await getTrip(id, user?.id ?? null);
   if (!data) notFound();
   const { trip, stops, isOwner } = data;
+  // Shared (public) trips stay open to everyone; owners need TrailsTV+ to open their own.
+  if (isOwner && !(await canUse("trips"))) {
+    return (
+      <>
+        <PageHero keepCase random={await allParkHeroes()} eyebrow={<Link href="/trips">← Your trips</Link>} title={trip.name} />
+        <div className="container" style={{ marginTop: "2rem" }}>
+          <UpgradeBox title={FEATURE_COPY.trips.title} text={`${FEATURE_COPY.trips.text} This trip is saved and will open again when you join.`} next={`/trips/${trip.id}`} />
+        </div>
+      </>
+    );
+  }
   const days = tripDays(trip);
   const located = stops.filter((s) => s.lat != null && s.lon != null);
   const heroPark = stops.map((s) => (s.parkCode ? getPark(s.parkCode) : undefined)).find(Boolean);
@@ -33,7 +46,7 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
 
   return (
     <>
-    <PageHero
+    <PageHero keepCase
       image={heroPark ? await parkHero(heroPark) : null}
       random={heroPark && await parkHero(heroPark) ? undefined : await allParkHeroes()}
       eyebrow={isOwner ? <Link href="/trips">← Your trips</Link> : "Shared trip"}
@@ -75,7 +88,7 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
               <span>Day {day}{date && <span className="muted" style={{ fontWeight: 400, fontSize: "1rem" }}> · {fmtDay(date)}</span>}</span>
               <span className="small" style={{ fontWeight: 400 }}>
                 {miles > 0 && <span className="muted">{Math.round(miles * 10) / 10} trail mi · </span>}
-                {routes.map((url, j) => <a key={url} href={url} target="_blank" rel="noopener">🧭 Day route{routes.length > 1 ? ` ${j + 1}` : ""} </a>)}
+                {routes.map((url, j) => <a key={url} href={url} target="_blank" rel="noopener">🧭 Day Route{routes.length > 1 ? ` ${j + 1}` : ""} </a>)}
               </span>
             </h2>
             <div className="card">
@@ -107,10 +120,10 @@ export default async function TripPage({ params }: { params: Promise<{ id: strin
 
       {isOwner && (
         <>
-          <h2>Add a custom stop</h2>
+          <h2>Add a Custom Stop</h2>
           <p className="muted small">Lodging, a restaurant, a gas stop: anything not in TrailsTV. Parks and trails can be added from their pages with “Add to trip”.</p>
           <AddCustomStop tripId={trip.id} days={days} />
-          <h2>Trip settings</h2>
+          <h2>Trip Settings</h2>
           <TripSettings trip={{ id: trip.id, name: trip.name, startDate: trip.startDate, endDate: trip.endDate, notes: trip.notes, isPublic: trip.isPublic }} />
         </>
       )}

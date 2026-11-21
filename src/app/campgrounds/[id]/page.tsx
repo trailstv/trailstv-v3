@@ -148,7 +148,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
 
         {camp.seasons.length > 0 && (
           <div className="split-section">
-            <h3>Season & hours</h3>
+            <h3>Season & Hours</h3>
             {camp.seasons.map((x, i) => {
               const allDay = DAYS.every((d) => x.hours[d] === "All Day");
               return (
@@ -175,7 +175,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
         )}
 
         <div className="split-section">
-          <h3>RVs, trailers & access</h3>
+          <h3>RVs, Trailers & Access</h3>
           <table className="kv">
             <tbody>
               {camp.access.rvAllowed != null && <tr><th>RVs</th><td>{camp.access.rvAllowed ? `Allowed${camp.access.rvMaxLength ? `, up to ${camp.access.rvMaxLength} ft` : ""}` : "Not allowed"}</td></tr>}
@@ -195,7 +195,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
 
         {(camp.directions || camp.address) && (
           <div className="split-section">
-            <h3>Getting there</h3>
+            <h3>Getting There</h3>
             {camp.address && <p className="small" style={{ marginTop: 0 }}>{[camp.address.line1, camp.address.city, `${camp.address.state} ${camp.address.zip}`.trim()].filter(Boolean).join(", ")}</p>}
             {camp.directions && <div className="small prose"><Paras text={camp.directions} /></div>}
           </div>
@@ -214,7 +214,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
 
         {others.length > 0 && (
           <>
-            <div className="split-section" style={{ paddingBottom: ".5rem" }}><h3 style={{ margin: 0 }}>Other campgrounds in {shortPark}</h3></div>
+            <div className="split-section" style={{ paddingBottom: ".5rem" }}><h3 style={{ margin: 0 }}>Other Campgrounds in {shortPark}</h3></div>
             {others.map((o) => <ExplorerItem key={o.id} id={o.id} href={`/campgrounds/${o.id}`} icon="⛺" title={shortCampName(o.name)} meta={campMeta(o)} />)}
           </>
         )}
@@ -253,7 +253,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
         </section>
 
         <section>
-          <h2>Conditions at camp</h2>
+          <h2>Conditions at Camp</h2>
           <div className="panel-grid">
             <div className="card panel" style={{ gridColumn: "1 / -1" }}>
               <h3>🌤️ Forecast</h3>
@@ -273,7 +273,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
               <div className="src">Source: {forecast.attribution}</div>
             </div>
             <div className="card panel">
-              <h3>🔥 Wildfires nearby</h3>
+              <h3>🔥 Wildfires Nearby</h3>
               {fires.ok && fires.data ? (
                 fires.data.length ? (
                   <ul>{fires.data.map((f) => <li key={f.name}><b>{f.name}</b>: {f.acres ? `${Math.round(f.acres).toLocaleString()} ac` : "size n/a"}{f.containment != null && `, ${f.containment}% contained`}</li>)}</ul>
@@ -283,7 +283,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
             </div>
             {camp.weather && (
               <div className="card panel">
-                <h3>🗓️ Typical weather</h3>
+                <h3>🗓️ Typical Weather</h3>
                 <p className="small" style={{ margin: 0 }}>{camp.weather}</p>
               </div>
             )}
@@ -299,7 +299,7 @@ export default async function CampgroundPage({ params }: { params: Promise<{ id:
 
         {nearTrails.length > 0 && (
           <section>
-            <h2>Trails near camp</h2>
+            <h2>Trails Near Camp</h2>
             <ul className="camp-trails">
               {nearTrails.map((t) => <li key={t.id}><Link href={`/trails/${t.id}`}>{diffIcon(t.difficulty)} {t.name}</Link> <span className="small muted">{trailMeta(t)}</span></li>)}
             </ul>
