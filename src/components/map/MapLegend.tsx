@@ -1,6 +1,7 @@
+import { titleCase } from "@/lib/title-case";
 import { MARKERS, DIFFICULTY_COLORS, pinSvg, type MarkerKind } from "./pins";
 
-const SHOWN: MarkerKind[] = ["campground", "riverGauge", "boatLaunch"];
+const SHOWN: MarkerKind[] = ["campground", "riverGauge", "boatLaunch", "paddleSpot"];
 
 export function MapLegend() {
   const Pin = ({ kind, color }: { kind: MarkerKind; color: string }) => (
@@ -9,7 +10,7 @@ export function MapLegend() {
   return (
     <div className="legend small">
       {Object.entries(DIFFICULTY_COLORS).map(([d, c]) => (
-        <span key={d}><Pin kind="trailhead" color={c} /> {d.replace("-", " ")}</span>
+        <span key={d}><Pin kind="trailhead" color={c} /> {titleCase(d.replace("-", " "))}</span>
       ))}
       {SHOWN.map((k) => (
         <span key={k}><Pin kind={k} color={MARKERS[k].color} /> {MARKERS[k].label}</span>

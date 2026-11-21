@@ -10,6 +10,7 @@ export type ConditionKey =
   | "tides"
   | "campgrounds"
   | "boatLaunches"
+  | "paddleSpots"
   | "climbingClosures"
   | "webcams";
 

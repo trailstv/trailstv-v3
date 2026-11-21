@@ -1,9 +1,11 @@
 "use client";
 
+import { titleCase } from "@/lib/title-case";
 import { useEffect, useState } from "react";
 import { forecastDate, forecastPart } from "@/lib/forecast-format";
 import type { ConditionKey, SourceResult } from "@/lib/types";
 import Link from "next/link";
+import { googleDirections } from "@/lib/directions";
 import { WeatherIcon } from "./WeatherIcon";
 
 type Results = Partial<Record<ConditionKey, SourceResult<any>>>;
@@ -11,7 +13,7 @@ type Results = Partial<Record<ConditionKey, SourceResult<any>>>;
 const TITLES: Record<ConditionKey, string> = {
   weather: "🌤️ Forecast", alerts: "⚠️ Alerts & closures", air: "💨 Air quality", fire: "🔥 Wildfires nearby",
   sun: "🌅 Sun", rivers: "🌊 River gauges", snow: "❄️ Snowpack (SNOTEL)", avalanche: "🏔️ Avalanche forecast",
-  tides: "🌊 Tides", campgrounds: "⛺ Campgrounds", boatLaunches: "⛵ Boat launches",
+  tides: "🌊 Tides", campgrounds: "⛺ Campgrounds", boatLaunches: "⛵ Boat launches", paddleSpots: "🛶 Kayak & canoe launches",
   climbingClosures: "🧗 Climbing closures", webcams: "📷 Webcams",
 };
 
@@ -69,6 +71,20 @@ function Body({ k, d, timeZone }: { k: ConditionKey; d: any; timeZone: string })
     case "boatLaunches":
       if (!d.length) return <p className="muted">None listed on Recreation.gov.</p>;
       return <ul>{d.slice(0, 10).map((f: any) => <li key={f.id}>{f.name}</li>)}</ul>;
+    case "paddleSpots":
+      if (!d.length) return <p className="muted">No put-ins mapped on OpenStreetMap near this park yet.</p>;
+      return (
+        <ul className="camp-list">
+          {d.slice(0, 12).map((s: any) => (
+            <li key={s.id}>
+              <b>{s.name}</b> <span className="small muted">· {s.typeLabel}</span>
+              {s.detail && <div className="small muted">{s.detail}</div>}
+              <div className="small"><a href={googleDirections({ lat: s.lat, lon: s.lon })} target="_blank" rel="noopener">🧭 Directions</a></div>
+            </li>
+          ))}
+          {d.length > 12 && <li className="small muted">+{d.length - 12} more on the map</li>}
+        </ul>
+      );
     case "climbingClosures":
       if (!d.length) return <p>No climbing closures posted. ✅</p>;
       return <>{d.map((a: any) => <div key={a.id} className="alert"><b>{a.title}</b></div>)}</>;
@@ -109,7 +125,7 @@ export function ConditionsPanel({ parkCode, activity, timeZone }: { parkCode: st
     <div className="panel-grid">
       {(Object.entries(data) as [ConditionKey, SourceResult<any>][]).map(([k, r]) => (
         <div key={k} className="card panel" style={k === "weather" ? { gridColumn: "1 / -1" } : undefined}>
-          <h3>{TITLES[k]}</h3>
+          <h3>{titleCase(TITLES[k])}</h3>
           {r.ok && r.data ? <Body k={k} d={r.data} timeZone={timeZone} /> : <p className="err">Unavailable: {r.error}</p>}
           {r.attribution && <div className="src">Source: {r.attribution}</div>}
         </div>

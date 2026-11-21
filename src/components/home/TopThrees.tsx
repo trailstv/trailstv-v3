@@ -1,5 +1,6 @@
 "use client";
 
+import { titleCase } from "@/lib/title-case";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -21,7 +22,7 @@ export function TopThrees({ groups }: { groups: TopGroup[] }) {
   return (
     <section className={`top3${ready ? "" : " top3-pending"}`} aria-labelledby="top3-title">
       <div className="top3-head">
-        <h2 id="top3-title"><span aria-hidden="true">{group.icon}</span> Top 3 for {group.name.toLowerCase()}</h2>
+        <h2 id="top3-title"><span aria-hidden="true">{group.icon}</span> Top 3 for {titleCase(group.name)}</h2>
         <Link href={`/activities/${group.slug}`} className="small">All {group.name.toLowerCase()} parks →</Link>
       </div>
 

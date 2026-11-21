@@ -288,3 +288,26 @@ export type Completion = typeof completions.$inferSelect;
 export type Trip = typeof trips.$inferSelect;
 export type AccessGrant = typeof accessGrants.$inferSelect;
 export type TripStop = typeof tripStops.$inferSelect;
+
+/** "Work with TrailsTV" enquiries from /partners. Read and triaged in Admin → Partners. */
+export const partnerInquiries = pgTable(
+  "partner_inquiries",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    name: text("name").notNull(),
+    email: text("email").notNull(),
+    organization: text("organization").notNull(),
+    website: text("website"),
+    kind: text("kind").$type<"brand" | "outfitter" | "nonprofit" | "creator" | "other">().notNull(),
+    interests: jsonb("interests").$type<string[]>().notNull().default([]),
+    parks: text("parks"),
+    budget: text("budget"),
+    message: text("message").notNull(),
+    status: text("status").$type<"new" | "contacted" | "closed" | "spam">().notNull().default("new"),
+    /** One-way hash of the sender's IP, only for rate limiting. */
+    ipHash: text("ip_hash"),
+    userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
+  },
+  (t) => [index("partner_inquiries_created_idx").on(t.createdAt), index("partner_inquiries_ip_idx").on(t.ipHash, t.createdAt)],
+);

@@ -11,7 +11,7 @@ export function TopRated({ groups, highlight }: { groups: TopGroup[]; highlight?
   return (
     <section className="top-rated" aria-labelledby="top-rated-title">
       <div className="top3-head">
-        <h2 id="top-rated-title">Top rated for every activity</h2>
+        <h2 id="top-rated-title">Top Rated for Every Activity</h2>
         <Link href="/activities" className="small">All activities →</Link>
       </div>
       <ul className="top-rated-grid">

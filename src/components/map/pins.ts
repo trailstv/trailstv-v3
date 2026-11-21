@@ -6,7 +6,7 @@
  */
 
 export type MarkerKind =
-  | "trailhead" | "campground" | "boatLaunch" | "riverGauge" | "climbing"
+  | "trailhead" | "campground" | "boatLaunch" | "paddleSpot" | "riverGauge" | "climbing"
   | "ski" | "viewpoint" | "visitorCenter" | "webcam" | "park";
 
 /** 24×24 glyphs drawn in white inside the pin. */
@@ -14,6 +14,7 @@ const GLYPHS: Record<MarkerKind, string> = {
   trailhead: '<path d="M13 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-3 5 3-1 2 3 3 1-.5 1.8-3.8-1.2-1 3 2.3 2.4V22h-2v-4.1L10.5 16 9 22H7l2.2-9.6L8 13v3H6v-4.3L10 9Z"/>',
   campground: '<path d="M12 3 2 21h7l3-6 3 6h7L12 3Zm0 4.2L18.6 19h-2.4L12 11l-4.2 8H5.4L12 7.2Z"/>',
   boatLaunch: '<path d="M11 3v10H5l6-10Zm2 2 5 8h-5V5ZM3 15h18l-2.5 4.5a2 2 0 0 1-1.7 1H7.2a2 2 0 0 1-1.7-1L3 15Z"/>',
+  paddleSpot: '<path d="M17.6 2.6l1.8 1.8-3.3 3.3.7.7c.8.8.8 2 0 2.8l-1.4 1.4c-.8.8-2 .8-2.8 0l-.7-.7-3.5 3.5.7.7c.8.8.8 2 0 2.8l-1.4 1.4c-.8.8-2 .8-2.8 0l-2-2c-.8-.8-.8-2 0-2.8l1.4-1.4c.8-.8 2-.8 2.8 0l.7.7 3.5-3.5-.7-.7c-.8-.8-.8-2 0-2.8l1.4-1.4c.8-.8 2-.8 2.8 0l.7.7 3.3-3.3ZM3 21.5h18V23H3v-1.5Z"/>',
   riverGauge: '<path d="M2 15c2 0 2-1.5 4-1.5S8 15 10 15s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5v2c-2 0-2 1.5-4 1.5s-2-1.5-4-1.5-2 1.5-4 1.5-2-1.5-4-1.5-2 1.5-4 1.5v-2Zm0 4c2 0 2-1.5 4-1.5S8 19 10 19s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5v2c-2 0-2 1.5-4 1.5s-2-1.5-4-1.5-2 1.5-4 1.5-2-1.5-4-1.5-2 1.5-4 1.5v-2ZM12 2s5 5.3 5 8.5a5 5 0 0 1-10 0C7 7.3 12 2 12 2Z"/>',
   climbing: '<path d="M8 3h2l1 4 3-1 1 2-3 2 2 5-2 1-2-4-2 2v6H6v-7l2-3-1-3 1-4Zm9 1a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z"/>',
   ski: '<path d="M15 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-6 5 5 1 2 3 3 .5-.3 2-4-.7-1.2-1.6-1.6 2.6L15 17l-1 1-4-2.3 1.8-3.5L9 11l-2 2-1.5-1.3L9 8ZM2 19.5 21 15l.4 1.8-19 4.6L2 19.5Z"/>',
@@ -26,12 +27,13 @@ const GLYPHS: Record<MarkerKind, string> = {
 export const MARKERS: Record<MarkerKind, { color: string; label: string }> = {
   trailhead: { color: "#3a6a8c", label: "Trailhead" },
   campground: { color: "#8a5a2b", label: "Campground" },
-  boatLaunch: { color: "#2f6f80", label: "Boat launch" },
-  riverGauge: { color: "#5e9aa6", label: "River gauge" },
+  boatLaunch: { color: "#2f6f80", label: "Boat Launch" },
+  paddleSpot: { color: "#1f8a7a", label: "Kayak / Canoe Launch" },
+  riverGauge: { color: "#5e9aa6", label: "River Gauge" },
   climbing: { color: "#a2462e", label: "Climbing" },
-  ski: { color: "#4a6fa5", label: "Ski / snow" },
+  ski: { color: "#4a6fa5", label: "Ski / Snow" },
   viewpoint: { color: "#c27a3a", label: "Viewpoint" },
-  visitorCenter: { color: "#5b4b8a", label: "Visitor center" },
+  visitorCenter: { color: "#5b4b8a", label: "Visitor Center" },
   webcam: { color: "#444", label: "Webcam" },
   park: { color: "#1e3a52", label: "Park" },
 };

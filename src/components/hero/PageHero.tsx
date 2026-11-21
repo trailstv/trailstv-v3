@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { titleCaseNode } from "@/lib/title-case";
 import type { HeroImage } from "@/lib/hero";
 import { RandomHeroImage } from "./RandomHeroImage";
 
@@ -8,12 +9,14 @@ import { RandomHeroImage } from "./RandomHeroImage";
  * With no image available, a steel-blue mountain backdrop is shown instead.
  */
 export function PageHero({
-  image, random, eyebrow, title, subtitle, tall, withSplit, children,
+  image, random, eyebrow, title, subtitle, tall, withSplit, children, keepCase,
 }: {
   image?: HeroImage | null;
   random?: HeroImage[];
   eyebrow?: React.ReactNode;
   title: React.ReactNode;
+  /** Show the title exactly as given (user-typed text such as trip names or search terms). */
+  keepCase?: boolean;
   subtitle?: React.ReactNode;
   tall?: boolean;
   /** Leave room at the bottom for the map/list panel that overlaps the hero. */
@@ -39,7 +42,7 @@ export function PageHero({
       ) : null}
       <div className="container">
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-        <h1>{title}</h1>
+        <h1>{keepCase ? title : titleCaseNode(title)}</h1>
         {subtitle && <p>{subtitle}</p>}
         {children}
       </div>

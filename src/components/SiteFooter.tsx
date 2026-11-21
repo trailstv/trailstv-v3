@@ -12,6 +12,7 @@ export function SiteFooter() {
             <Link href="/parks">Parks</Link>
             <Link href="/activities">Activities</Link>
             <Link href="/pricing">TrailsTV+</Link>
+            <Link href="/partners">Work with us</Link>
             <Link href="/sources">Sources &amp; credits</Link>
           </nav>
           <SocialLinks />

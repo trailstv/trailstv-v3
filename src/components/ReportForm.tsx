@@ -35,7 +35,7 @@ export function ReportForm({ parkCode, trailId, activities }: { parkCode: string
   if (!session?.user) {
     return (
       <div className="card">
-        <h3>Add a trip report</h3>
+        <h3>Add a Trip Report</h3>
         <p className="small"><Link href={`/login?next=${encodeURIComponent(typeof window === "undefined" ? "/" : window.location.pathname)}`}>Sign in</Link> to share conditions with other visitors.</p>
       </div>
     );
@@ -43,7 +43,7 @@ export function ReportForm({ parkCode, trailId, activities }: { parkCode: string
 
   return (
     <form className="report card" onSubmit={submit}>
-      <h3>Add a trip report <span className="muted small">as {session.user.name}</span></h3>
+      <h3>Add a Trip Report <span className="muted small">as {session.user.name}</span></h3>
       <select name="activity" defaultValue={activities[0]?.slug}>
         {activities.map((a) => <option key={a.slug} value={a.slug}>{a.name}</option>)}
       </select>

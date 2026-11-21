@@ -110,9 +110,12 @@ export type SessionUser = { id: string; name: string; email: string; image?: str
 
 /** Current signed-in user (deduped per request), or null. */
 export const getUser = cache(async (): Promise<SessionUser | null> => {
+  // Read the request headers first, outside the try: this is what tells Next.js the page
+  // depends on the visitor, so it's rendered per request instead of once at build time.
+  const h = await headers();
   if (!db) return null;
   try {
-    const s = await getAuth().api.getSession({ headers: await headers() });
+    const s = await getAuth().api.getSession({ headers: h });
     if (!s?.user) return null;
     const u = s.user as typeof s.user & { role?: string };
     const role = u.role === "admin" || adminEmails().includes(u.email.toLowerCase()) ? "admin" : "user";

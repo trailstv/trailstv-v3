@@ -145,7 +145,7 @@ function useLiveOverlays(parkCode?: string) {
   useEffect(() => {
     if (!parkCode) return;
     const get = (src: string) => fetch(`/api/parks/${parkCode}/${src}`).then((r) => r.json()).catch(() => null);
-    Promise.all([get("campgrounds"), get("rivers"), get("boatLaunches")]).then(([camps, rivers, boats]) => {
+    Promise.all([get("campgrounds"), get("rivers"), get("boatLaunches"), get("paddleSpots")]).then(([camps, rivers, boats, paddle]) => {
       const camp: MapMarker[] = (camps?.data ?? [])
         .filter((c: any) => c.latitude && c.longitude)
         .map((c: any) => ({ lat: +c.latitude, lon: +c.longitude, kind: "campground", label: c.name, href: c.reservationUrl || undefined, detail: `${c.campsites?.totalSites ?? "?"} sites` }));
@@ -157,7 +157,8 @@ function useLiveOverlays(parkCode?: string) {
         bySite.set(g.siteId, m);
       }
       const boat: MapMarker[] = (boats?.data ?? []).map((f: any) => ({ lat: f.lat, lon: f.lon, kind: "boatLaunch", label: f.name }));
-      setLayers({ Campgrounds: camp, "River gauges": [...bySite.values()], "Boat launches": boat });
+      const spots: MapMarker[] = (paddle?.data ?? []).map((s: any) => ({ lat: s.lat, lon: s.lon, kind: "paddleSpot", label: s.name, detail: [s.typeLabel, s.detail].filter(Boolean).join(" · "), href: s.website || undefined }));
+      setLayers({ Campgrounds: camp, "River Gauges": [...bySite.values()], "Boat Launches": boat, "Kayak & Canoe Launches (OSM)": spots });
     });
   }, [parkCode]);
   return layers;
@@ -187,7 +188,7 @@ export default function LeafletMap({ center, zoom = 10, markers = [], line: sing
         ))}
 
         {osm && osm.features.length > 0 && (
-          <LayersControl.Overlay name="Trail lines (OpenStreetMap)" checked>
+          <LayersControl.Overlay name="Trail Lines (OpenStreetMap)" checked>
             <OsmTrailsLayer />
           </LayersControl.Overlay>
         )}
@@ -224,7 +225,7 @@ export default function LeafletMap({ center, zoom = 10, markers = [], line: sing
 
         {Object.entries(overlays).map(([name, ms]) =>
           ms.length ? (
-            <LayersControl.Overlay key={name} name={`${name} (${ms.length})`} checked={name !== "River gauges"}>
+            <LayersControl.Overlay key={name} name={`${name} (${ms.length})`} checked={name !== "River Gauges"}>
               <LayerGroup>
                 {ms.map((m, i) => (
                   <Marker key={`${name}-${i}`} position={[m.lat, m.lon]} icon={markerIcon(m.kind)}>

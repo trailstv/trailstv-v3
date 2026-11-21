@@ -5,12 +5,13 @@ import { getParkAlerts, getCampgrounds, getWebcams, getClimbingClosures } from "
 import { getGaugesNear } from "./sources/usgs";
 import { getSnowNear } from "./sources/snotel";
 import { getAirQuality, getFiresNear, getTides, getAvalanche, getRecFacilities } from "./sources/misc";
+import { getPaddleSpots } from "./sources/osm";
 import { getSunTimes } from "./sources/sun";
 import { getCampgroundsForPark, campMeta, closedNow } from "./campgrounds";
 
 export const ALL_CONDITIONS: ConditionKey[] = [
   "weather", "alerts", "air", "fire", "sun", "rivers", "snow", "avalanche",
-  "tides", "campgrounds", "boatLaunches", "climbingClosures", "webcams",
+  "tides", "campgrounds", "boatLaunches", "paddleSpots", "climbingClosures", "webcams",
 ];
 
 const unavailable = (source: string, why: string): SourceResult<never> => ({
@@ -49,6 +50,7 @@ export async function getCondition(park: Park, key: ConditionKey): Promise<Sourc
       return { ...live, data: live.data?.map((c) => ({ id: c.id, name: c.name, meta: c.campsites?.totalSites ? `${c.campsites.totalSites} sites` : "" })) };
     }
     case "boatLaunches": return getRecFacilities(lat, lon, radiusKm, "boat ramp");
+    case "paddleSpots": return getPaddleSpots(lat, lon, radiusKm);
     case "climbingClosures": return getClimbingClosures(code);
     case "webcams": return getWebcams(code);
   }

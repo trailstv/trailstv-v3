@@ -11,7 +11,7 @@ export const DATA_SOURCES = [
   { name: "National Interagency Fire Center", href: "https://data-nifc.opendata.arcgis.com/", what: "Active wildfire perimeters", license: "Public domain" },
   { name: "Recreation.gov (RIDB)", href: "https://ridb.recreation.gov/", what: "Campsite details, boat launches & campground booking", license: "Public domain" },
   { name: "Avalanche.org", href: "https://avalanche.org/", what: "Avalanche danger from regional avalanche centers", license: "Used with attribution" },
-  { name: "OpenStreetMap contributors", href: "https://www.openstreetmap.org/copyright", what: "Trail lines & trail-use tags", license: "ODbL" },
+  { name: "OpenStreetMap contributors", href: "https://www.openstreetmap.org/copyright", what: "Trail lines, trail-use tags and kayak & canoe launches (via Overpass API)", license: "ODbL" },
 ];
 
 export const MAP_SOURCES = [

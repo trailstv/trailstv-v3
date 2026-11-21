@@ -1,3 +1,4 @@
+import { titleCase } from "@/lib/title-case";
 import { getVideos, toPublic, type Video } from "@/lib/videos";
 import { VideoPlayer } from "./VideoPlayer";
 
@@ -17,7 +18,7 @@ export async function VideoSlot({
 
   return (
     <section className={`video-slot video-${layout}`} data-slot={slot}>
-      {title && <h2>{title}</h2>}
+      {title && <h2>{titleCase(title)}</h2>}
       <div className="video-list">
         {items.map((v, i) => <VideoPlayer key={v.id} video={v} priority={layout === "feature" && i === 0} />)}
       </div>
