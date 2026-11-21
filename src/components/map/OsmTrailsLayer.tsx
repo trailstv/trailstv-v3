@@ -28,6 +28,17 @@ export function OsmTrailsLayer() {
     line.openPopup(b.getCenter());
   }, [ex?.active, ex?.source, map]);
 
+  // Picking an activity on the park page → zoom to that activity's trails.
+  const activity = osm?.activity ?? null;
+  const firstRun = useRef(true);
+  useEffect(() => {
+    if (firstRun.current) { firstRun.current = false; if (!activity) return; }
+    if (!osm?.visible.length || !activity) return;
+    const pts = osm.visible.flatMap((f) => f.geometry.coordinates.flat().map(([lon, lat]) => [lat, lon] as [number, number]));
+    if (pts.length) map.fitBounds(L.latLngBounds(pts), { padding: [40, 40], maxZoom: 14 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activity, osm?.visible.length, map]);
+
   if (!osm?.visible.length) return null;
 
   return (

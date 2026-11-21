@@ -109,13 +109,15 @@ export function ConditionsPanel({ parkCode, activity, timeZone }: { parkCode: st
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Each activity click cancels the previous request, so a slow answer can't overwrite a newer one.
+    const ctrl = new AbortController();
     setLoading(true);
     const qs = activity ? `?activity=${activity}` : "";
-    fetch(`/api/parks/${parkCode}/conditions${qs}`)
+    fetch(`/api/parks/${parkCode}/conditions${qs}`, { signal: ctrl.signal })
       .then((r) => r.json())
-      .then((j) => setData(j.data))
-      .catch(() => setData({}))
-      .finally(() => setLoading(false));
+      .then((j) => { setData(j.data); setLoading(false); })
+      .catch((e) => { if ((e as Error).name !== "AbortError") { setData({}); setLoading(false); } });
+    return () => ctrl.abort();
   }, [parkCode, activity]);
 
   if (loading) return <p className="muted">Loading live conditions…</p>;

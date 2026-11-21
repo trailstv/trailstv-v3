@@ -19,6 +19,9 @@ export interface MapMarker {
   groups?: string[];
   /** Allowed trail uses; with a Trail use filter active, pins that don't match are hidden. */
   uses?: string[];
+  /** Trailhead pins: activities + trail type, so the park page's activity buttons can filter them */
+  activities?: string[];
+  trailType?: "terra" | "snow" | "water";
   lat: number;
   lon: number;
   kind: MarkerKind;
@@ -198,7 +201,7 @@ export default function LeafletMap({ center, zoom = 10, markers = [], line: sing
             {allLines.length > 0 && (
               <Polyline positions={allLines.map((l) => l.map(([lon, lat]) => [lat, lon] as [number, number]))} pathOptions={{ color: DIFFICULTY_COLORS[lineDifficulty ?? ""] ?? "#c27a3a", weight: 5, opacity: 0.95 }} />
             )}
-            {markers.filter((m) => !m.uses || useFilter.every((u) => m.uses!.includes(u))).map((m, i) => {
+            {markers.filter((m) => !m.uses || (osm ? osm.showsTrail({ uses: m.uses, activities: m.activities, trailType: m.trailType }) : useFilter.every((u) => m.uses!.includes(u)))).map((m, i) => {
               const hit = active != null && (m.id === active || (m.groups?.includes(active) ?? false));
               return (
                 <Marker

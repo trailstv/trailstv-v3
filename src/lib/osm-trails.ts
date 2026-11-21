@@ -25,6 +25,10 @@ export interface OsmTrailProps {
   osmWays: number[];
   /** Link to the TrailsTV trail page (imported NPS / featured trails) */
   href?: string;
+  /** NPS trail type: standard (terra), snow route or water trail */
+  trailType?: "terra" | "snow" | "water";
+  /** TrailsTV activity slugs this trail is for (from NPS allowed uses / featured trail tags) */
+  activities?: string[];
 }
 
 export type OsmTrailFeature = {
@@ -101,4 +105,34 @@ export function simplify(pts: [number, number][], tol = 0.00004): [number, numbe
   }
   if (maxD <= tol) return [pts[0], pts[pts.length - 1]];
   return [...simplify(pts.slice(0, idx + 1), tol).slice(0, -1), ...simplify(pts.slice(idx), tol)];
+}
+
+/* ------------------------- Activity → which trails ------------------------- */
+
+/**
+ * What the park page's activity buttons show in the trail list and on the map.
+ * `use` = an allowed use in OSM/NPS data; `type` = an NPS trail type; `label` = list heading.
+ * Activities not listed here (camping, fishing, stargazing…) show trails tagged for that activity.
+ */
+export const ACTIVITY_TRAILS: Record<string, { use?: TrailUse; type?: "terra" | "snow" | "water"; label: string }> = {
+  hiking: { use: "hike", type: "terra", label: "Hiking Trails" },
+  backpacking: { use: "hike", type: "terra", label: "Hiking Trails" },
+  "mountain-biking": { use: "bike", label: "Biking Trails" },
+  "horseback-riding": { use: "horse", label: "Horse Trails" },
+  snowshoeing: { type: "snow", label: "Snowshoe Routes" },
+  "cross-country-skiing": { type: "snow", label: "Ski Trails" },
+  kayaking: { type: "water", label: "Paddling Routes" },
+  paddleboarding: { type: "water", label: "Paddling Routes" },
+};
+
+/** Does a trail suit the selected park-page activity? No activity = the standard hiking trail list. */
+export function matchesActivity(p: OsmTrailProps, activity?: string | null): boolean {
+  const type = p.trailType ?? "terra";
+  if (!activity) return type === "terra" && p.uses.hike === "yes";
+  if (p.activities?.includes(activity)) return true;
+  const rule = ACTIVITY_TRAILS[activity];
+  if (!rule) return false;
+  if (rule.type && rule.type !== "terra") return type === rule.type;
+  if (rule.type === "terra" && type !== "terra") return false;
+  return rule.use ? p.uses[rule.use] === "yes" : true;
 }

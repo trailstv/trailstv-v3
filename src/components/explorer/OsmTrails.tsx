@@ -1,8 +1,9 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, Suspense, useContext, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { ExplorerItem } from "./Explorer";
-import { allows, TRAIL_USES, USE_LABELS, type OsmTrailCollection, type OsmTrailFeature, type TrailUse } from "@/lib/osm-trails";
+import { allows, matchesActivity, ACTIVITY_TRAILS, TRAIL_USES, USE_LABELS, type OsmTrailCollection, type OsmTrailFeature, type OsmTrailProps, type TrailUse } from "@/lib/osm-trails";
 
 /**
  * OpenStreetMap trails for a park + the "Trail use" filter.
@@ -18,6 +19,14 @@ interface OsmState {
   toggle: (u: TrailUse) => void;
   clear: () => void;
   visible: OsmTrailFeature[];
+  /** Activity picked with the park page's activity buttons (?activity=…) */
+  activity: string | null;
+  /** The activity's own trails, before the trail-use filter */
+  base: OsmTrailFeature[];
+  /** No trails are tagged for this activity, so the standard hiking list is shown instead */
+  fallback: boolean;
+  /** Should a featured-trail row / pin show with the current activity + trail-use selection? */
+  showsTrail: (t: { uses: string[]; activities?: string[]; trailType?: "terra" | "snow" | "water" }) => boolean;
 }
 
 const Ctx = createContext<OsmState | null>(null);
@@ -28,6 +37,7 @@ export function OsmTrailsProvider({ parkCode, children }: { parkCode: string; ch
   const [source, setSource] = useState<"nps" | "osm">("nps");
   const [loaded, setLoaded] = useState(false);
   const [selected, setSelected] = useState<TrailUse[]>([]);
+  const [activity, setActivity] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -39,21 +49,62 @@ export function OsmTrailsProvider({ parkCode, children }: { parkCode: string; ch
     return () => { cancelled = true; };
   }, [parkCode]);
 
-  const value = useMemo<OsmState>(() => ({
-    source, features, loaded, selected,
-    toggle: (u) => setSelected((s) => (s.includes(u) ? s.filter((x) => x !== u) : [...s, u])),
-    clear: () => setSelected([]),
-    visible: selected.length ? features.filter((f) => allows(f.properties.uses, selected)) : features,
-  }), [source, features, loaded, selected]);
+  const value = useMemo<OsmState>(() => {
+    let base = features.filter((f) => matchesActivity(f.properties, activity));
+    // Activities with no trail rule (fishing, stargazing…) and nothing tagged: keep the hiking list.
+    const fallback = Boolean(activity && !base.length && !ACTIVITY_TRAILS[activity]);
+    if (fallback) base = features.filter((f) => matchesActivity(f.properties, null));
+    const act = fallback ? null : activity;
+    return {
+      source, features, loaded, selected, activity, base, fallback,
+      toggle: (u) => setSelected((s) => (s.includes(u) ? s.filter((x) => x !== u) : [...s, u])),
+      clear: () => setSelected([]),
+      visible: selected.length ? base.filter((f) => allows(f.properties.uses, selected)) : base,
+      showsTrail: (t) => {
+        if (selected.length && !selected.every((u) => t.uses.includes(u))) return false;
+        if (!act) return true; // featured trails always show on the overview
+        const props: OsmTrailProps = {
+          id: "", name: "", lengthMi: 0, difficulty: null, surface: null, osmWays: [], trailType: t.trailType, activities: t.activities,
+          uses: Object.fromEntries(TRAIL_USES.map((u) => [u, t.uses.includes(u) ? "yes" : null])) as OsmTrailProps["uses"],
+        };
+        return matchesActivity(props, act);
+      },
+    };
+  }, [source, features, loaded, selected, activity]);
 
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider value={value}>
+      <Suspense fallback={null}><ActivitySync onChange={setActivity} /></Suspense>
+      {children}
+    </Ctx.Provider>
+  );
+}
+
+/** Mirrors ?activity=… (set by the park page's activity buttons) into the trail filter. */
+function ActivitySync({ onChange }: { onChange: (a: string | null) => void }) {
+  const a = useSearchParams().get("activity");
+  useEffect(() => onChange(a), [a, onChange]);
+  return null;
+}
+
+/** "All Hiking Trails" heading that follows the selected activity. */
+export function TrailListHeading() {
+  const osm = useOsmTrails();
+  const rule = osm?.activity && !osm.fallback ? ACTIVITY_TRAILS[osm.activity] : undefined;
+  const label = !osm?.activity || osm.fallback ? "All Hiking Trails" : rule?.label ?? "Trails for This Activity";
+  return (
+    <h3 style={{ margin: 0 }}>
+      {label}
+      {osm?.loaded && osm.features.length > 0 && <span className="small muted" style={{ fontWeight: 400 }}> ({osm.visible.length})</span>}
+    </h3>
+  );
 }
 
 /** "Trail use" chips with live counts. Multiple selections = trails allowing all of them. */
 export function TrailUseFilter() {
   const osm = useOsmTrails();
   if (!osm) return null;
-  const count = (u: TrailUse) => osm.features.filter((f) => f.properties.uses[u] === "yes").length;
+  const count = (u: TrailUse) => osm.base.filter((f) => f.properties.uses[u] === "yes").length;
   return (
     <div className="chips" style={{ margin: 0 }}>
       <button type="button" className={`chip ${osm.selected.length === 0 ? "active" : ""}`} onClick={osm.clear}>All trails</button>
@@ -76,10 +127,21 @@ export function OsmTrailList({ initial = 25 }: { initial?: number }) {
   if (!osm) return null;
   if (!osm.loaded) return <div className="list-empty">Loading trails…</div>;
   if (!osm.features.length) return <div className="list-empty">The trail list for this park isn&apos;t available right now. Please check back soon.</div>;
+  if (!osm.base.length && osm.activity) {
+    const water = ACTIVITY_TRAILS[osm.activity]?.type === "water";
+    return (
+      <div className="list-empty">
+        {water
+          ? <>No paddling routes are mapped in this park. Kayak and canoe launches are on the map and under Live Conditions.</>
+          : <>No {(ACTIVITY_TRAILS[osm.activity]?.label ?? "trails").toLowerCase()} are mapped in this park.</>}
+      </div>
+    );
+  }
   if (!osm.visible.length) return <div className="list-empty">No trails here are marked for {osm.selected.map((u) => USE_LABELS[u].label.toLowerCase()).join(" + ")}. Many park trails don&apos;t allow bikes or dogs.</div>;
   const list = showAll ? osm.visible : osm.visible.slice(0, initial);
   return (
     <>
+      {osm.fallback && <div className="list-empty" style={{ textAlign: "left" }}>No trails are tagged for this activity, so here are all the hiking trails.</div>}
       {list.map((f) => {
         const p = f.properties;
         const uses = TRAIL_USES.filter((u) => p.uses[u] === "yes").map((u) => USE_LABELS[u].icon).join(" ");
@@ -102,9 +164,16 @@ export function OsmTrailList({ initial = 25 }: { initial?: number }) {
   );
 }
 
-/** Hides a curated trail row when it doesn't allow the selected uses. */
-export function UseGate({ uses, children }: { uses: string[]; children: React.ReactNode }) {
+/** Hides a featured trail row when it doesn't suit the selected activity or trail uses. */
+export function UseGate({ uses, activities, trailType, children }: { uses: string[]; activities?: string[]; trailType?: "terra" | "snow" | "water"; children: React.ReactNode }) {
   const osm = useOsmTrails();
-  if (osm?.selected.length && !osm.selected.every((u) => uses.includes(u))) return null;
+  if (osm && !osm.showsTrail({ uses, activities, trailType })) return null;
+  return <>{children}</>;
+}
+
+/** Hides the "Featured Trails" heading when none of them suit the selection. */
+export function FeaturedGate({ trails, children }: { trails: { uses: string[]; activities?: string[]; trailType?: "terra" | "snow" | "water" }[]; children: React.ReactNode }) {
+  const osm = useOsmTrails();
+  if (osm && !trails.some((t) => osm.showsTrail(t))) return null;
   return <>{children}</>;
 }
