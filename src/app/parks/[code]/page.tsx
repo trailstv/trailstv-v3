@@ -43,7 +43,9 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
   const camps = getCampgroundsForPark(park.code);
   const campPins = camps.filter((c) => c.lat != null && c.lon != null);
   const activities = getActivities().filter((a) => park.activities.includes(a.slug));
-  const chipData = activities.map(({ slug, name, icon }) => ({ slug, name, icon }));
+  const chipData = activities.map(({ slug, name, icon, conditions }) => ({ slug, name, icon, conditions }));
+  // Every activity, so a link like ?activity=kayaking works even if the park's own list doesn't name it.
+  const allChips = getActivities().map(({ slug, name, icon, conditions }) => ({ slug, name, icon, conditions }));
   const shortName = park.name.replace(/ National Parks?( and Preserve)?$/, "");
   const videos = await featuredVideoSet(park.code, park.activities);
 
@@ -82,7 +84,7 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
       >
         <div className="split-section">
           <h3>Activities</h3>
-          {chipData.length ? <ActivityChips activities={chipData} /> : <p className="small muted" style={{ margin: 0 }}>Activities for this park are coming soon.</p>}
+          {chipData.length || allChips.length ? <ActivityChips activities={chipData} all={allChips} /> : <p className="small muted" style={{ margin: 0 }}>Activities for this park are coming soon.</p>}
         </div>
 
         {camps.length > 0 && (
@@ -145,7 +147,7 @@ export default async function ParkPage({ params }: { params: Promise<{ code: str
       </OsmTrailsProvider>
 
       <div className="container">
-        <LiveConditions parkCode={park.code} timeZone={park.timeZone} activities={chipData} />
+        <LiveConditions parkCode={park.code} timeZone={park.timeZone} activities={allChips} />
 
         <h2>Trip Reports</h2>
         <Reports parkCode={park.code} />
