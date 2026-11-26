@@ -19,8 +19,15 @@ const ATTR = "© OpenStreetMap contributors (ODbL), via Overpass API";
 const ENDPOINTS = [
   process.env.OVERPASS_URL,
   "https://overpass-api.de/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
   "https://overpass.private.coffee/api/interpreter",
 ].filter(Boolean) as string[];
+/** Give up on one server after this long, and on all of them after BUDGET_MS. */
+const PER_TRY_MS = 6000;
+const BUDGET_MS = 12000;
+/** After every server failed, don't ask again for this long (per park area). */
+const FAIL_TTL_MS = 10 * 60 * 1000;
+const recentFailures = new Map<string, { at: number; error: string }>();
 const WEEK = 7 * 86400;
 
 export type PaddleSpotType = "put-in" | "take-out" | "put-in-take-out" | "whitewater" | "ramp" | "rental";
@@ -137,21 +144,31 @@ export async function getPaddleSpots(lat: number, lon: number, radiusKm: number)
   // Big parks: cap the circle so one query stays fast on the shared server.
   const radiusM = Math.round(Math.min(Math.max(radiusKm, 15), 70) * 1000);
   const body = query(lat, lon, radiusM);
+  const failed = recentFailures.get(body);
+  if (failed && Date.now() - failed.at < FAIL_TTL_MS) {
+    return { source: "osm-overpass", ok: false, fetchedAt, attribution: ATTR, error: failed.error };
+  }
+  const started = Date.now();
   let lastError = "";
   for (const endpoint of ENDPOINTS) {
+    const left = BUDGET_MS - (Date.now() - started);
+    if (left < 1500) break;
     try {
       const res = await fetch(`${endpoint}?data=${encodeURIComponent(body)}`, {
         headers: { Accept: "application/json", "User-Agent": "TrailsTV/1.0 (https://trailstv.com)" },
         next: { revalidate: WEEK, tags: ["osm-paddle"] },
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(Math.min(PER_TRY_MS, left)),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const raw = (await res.json()) as { elements?: OsmElement[]; remark?: string };
       if (!raw.elements) throw new Error(raw.remark ?? "No data");
+      recentFailures.delete(body);
       return { source: "osm-overpass", ok: true, fetchedAt, attribution: ATTR, data: toSpots(raw.elements) };
     } catch (e) {
       lastError = (e as Error).message;
     }
   }
-  return { source: "osm-overpass", ok: false, fetchedAt, attribution: ATTR, error: `Overpass unavailable (${lastError})` };
+  const error = `OpenStreetMap's Overpass servers are busy right now (${lastError}). Try again in a few minutes.`;
+  recentFailures.set(body, { at: Date.now(), error });
+  return { source: "osm-overpass", ok: false, fetchedAt, attribution: ATTR, error };
 }

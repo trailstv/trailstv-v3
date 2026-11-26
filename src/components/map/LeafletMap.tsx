@@ -11,6 +11,7 @@ import { useExplorer } from "@/components/explorer/Explorer";
 import { useOsmTrails } from "@/components/explorer/OsmTrails";
 import { OsmTrailsLayer } from "./OsmTrailsLayer";
 import type { TrailUse } from "@/lib/osm-trails";
+import { pinsForActivity, TOP_PINS } from "./park-pins";
 
 export interface MapMarker {
   /** Links the pin to a right-hand list item (see Explorer). */
@@ -148,10 +149,12 @@ function useLiveOverlays(parkCode?: string) {
   useEffect(() => {
     if (!parkCode) return;
     const get = (src: string) => fetch(`/api/parks/${parkCode}/${src}`).then((r) => r.json()).catch(() => null);
-    Promise.all([get("campgrounds"), get("rivers"), get("boatLaunches"), get("paddleSpots")]).then(([camps, rivers, boats, paddle]) => {
-      const camp: MapMarker[] = (camps?.data ?? [])
-        .filter((c: any) => c.latitude && c.longitude)
-        .map((c: any) => ({ lat: +c.latitude, lon: +c.longitude, kind: "campground", label: c.name, href: c.reservationUrl || undefined, detail: `${c.campsites?.totalSites ?? "?"} sites` }));
+    // Each layer appears as soon as its own data arrives (a slow source can't hold up the others).
+    const put = (name: string, ms: MapMarker[]) => setLayers((l) => ({ ...l, [name]: ms }));
+    get("campgrounds").then((camps) => put("Campgrounds", (camps?.data ?? [])
+      .filter((c: any) => c.latitude && c.longitude)
+      .map((c: any) => ({ lat: +c.latitude, lon: +c.longitude, kind: "campground", label: c.name, href: c.reservationUrl || undefined, detail: `${c.campsites?.totalSites ?? "?"} sites` }))));
+    get("rivers").then((rivers) => {
       const bySite = new Map<string, MapMarker>();
       for (const g of rivers?.data ?? []) {
         if (g.lat == null) continue;
@@ -159,10 +162,10 @@ function useLiveOverlays(parkCode?: string) {
         m.detail = [m.detail, `${g.value} ${g.unit}`].filter(Boolean).join(" · ");
         bySite.set(g.siteId, m);
       }
-      const boat: MapMarker[] = (boats?.data ?? []).map((f: any) => ({ lat: f.lat, lon: f.lon, kind: "boatLaunch", label: f.name }));
-      const spots: MapMarker[] = (paddle?.data ?? []).map((s: any) => ({ lat: s.lat, lon: s.lon, kind: "paddleSpot", label: s.name, detail: [s.typeLabel, s.detail].filter(Boolean).join(" · "), href: s.website || undefined }));
-      setLayers({ Campgrounds: camp, "River Gauges": [...bySite.values()], "Boat Launches": boat, "Kayak & Canoe Launches (OSM)": spots });
+      put("River Gauges", [...bySite.values()]);
     });
+    get("boatLaunches").then((boats) => put("Boat Launches", (boats?.data ?? []).map((f: any) => ({ lat: f.lat, lon: f.lon, kind: "boatLaunch", label: f.name }))));
+    get("paddleSpots").then((paddle) => put("Kayak & Canoe Launches (OSM)", (paddle?.data ?? []).map((s: any) => ({ lat: s.lat, lon: s.lon, kind: "paddleSpot", label: s.name, detail: [s.typeLabel, s.detail].filter(Boolean).join(" · "), href: s.website || undefined }))));
   }, [parkCode]);
   return layers;
 }
@@ -181,6 +184,59 @@ export default function LeafletMap({ center, zoom = 10, markers = [], line: sing
   const useFilter = osm?.selected ?? [];
   const groupActive = useMemo(() => Boolean(active && markers.some((m) => m.groups?.includes(active))), [active, markers]);
 
+  // Park maps: only the top few pins for the selected activity, until "Show all" is pressed.
+  const parkMode = Boolean(parkCode && osm);
+  // The selected activity, even when it has no trails of its own (camping, boating…): its pins are campgrounds, ramps…
+  const activity = osm?.activity ?? null;
+  const [showAll, setShowAll] = useState(false);
+  useEffect(() => setShowAll(false), [activity]);
+  const shownMarkers = useMemo(() => {
+    const passes = (m: MapMarker) => !m.uses || (osm ? osm.showsTrail({ uses: m.uses, activities: m.activities, trailType: m.trailType }) : useFilter.every((u) => m.uses!.includes(u)));
+    if (!parkMode) return markers.filter(passes);
+    return pinsForActivity({
+      activity,
+      featured: markers.filter((m) => m.kind === "trailhead" && passes(m)),
+      campgrounds: markers.filter((m) => m.kind === "campground"),
+      trails: osm?.visible ?? [],
+      overlays,
+    });
+  }, [parkMode, activity, markers, overlays, osm, useFilter]);
+  const pins = parkMode && !showAll
+    ? [...shownMarkers.slice(0, TOP_PINS), ...markers.filter((m) => m.id && m.id === active && !shownMarkers.slice(0, TOP_PINS).includes(m))]
+    : shownMarkers;
+  const pillRef = useRef<HTMLDivElement>(null);
+  useEffect(() => { if (pillRef.current) { L.DomEvent.disableClickPropagation(pillRef.current); L.DomEvent.disableScrollPropagation(pillRef.current); } });
+
+  const pinLayer = (
+    <LayerGroup>
+      {allLines.length > 0 && (
+        <Polyline positions={allLines.map((l) => l.map(([lon, lat]) => [lat, lon] as [number, number]))} pathOptions={{ color: DIFFICULTY_COLORS[lineDifficulty ?? ""] ?? "#c27a3a", weight: 5, opacity: 0.95 }} />
+      )}
+      {pins.map((m, i) => {
+        const hit = active != null && (m.id === active || (m.groups?.includes(active) ?? false));
+        return (
+          <Marker
+            key={m.id ?? `${m.kind}-${m.lat}-${m.lon}-${i}`}
+            position={[m.lat, m.lon]}
+            icon={markerIcon(m.kind, { difficulty: m.difficulty, selected: hit })}
+            opacity={groupActive && !hit ? 0.3 : 1}
+            zIndexOffset={hit ? 1000 : 0}
+            ref={(r) => { if (m.id) { if (r) refs.current.set(m.id, r); else refs.current.delete(m.id); } }}
+            eventHandlers={{
+              // Hover (or tap) a pin: open its info popup and highlight + scroll to its row in the list.
+              // Open the popup first: that closes the previous one, whose popupclose clears the old highlight.
+              mouseover: (e) => { if (!m.id) return; e.target.openPopup(); ex?.setActive(m.id, "map"); },
+              click: (e) => { if (!m.id) return; e.target.openPopup(); ex?.setActive(m.id, "map"); },
+              popupclose: () => { if (m.id && activeRef.current === m.id) ex?.setActive(null, "map"); },
+            }}
+          >
+            <MarkerPopup m={m} />
+          </Marker>
+        );
+      })}
+    </LayerGroup>
+  );
+
   return (
     <MapContainer center={center} zoom={zoom} scrollWheelZoom={scrollWheelZoom} style={{ height, width: "100%" }} className="map">
       <LayersControl position="topright">
@@ -190,43 +246,19 @@ export default function LeafletMap({ center, zoom = 10, markers = [], line: sing
           </LayersControl.BaseLayer>
         ))}
 
-        {osm && osm.features.length > 0 && (
+        {!parkMode && osm && osm.features.length > 0 && (
           <LayersControl.Overlay name="Trail Lines (OpenStreetMap)" checked>
             <OsmTrailsLayer />
           </LayersControl.Overlay>
         )}
 
-        <LayersControl.Overlay name="Trails" checked>
-          <LayerGroup>
-            {allLines.length > 0 && (
-              <Polyline positions={allLines.map((l) => l.map(([lon, lat]) => [lat, lon] as [number, number]))} pathOptions={{ color: DIFFICULTY_COLORS[lineDifficulty ?? ""] ?? "#c27a3a", weight: 5, opacity: 0.95 }} />
-            )}
-            {markers.filter((m) => !m.uses || (osm ? osm.showsTrail({ uses: m.uses, activities: m.activities, trailType: m.trailType }) : useFilter.every((u) => m.uses!.includes(u)))).map((m, i) => {
-              const hit = active != null && (m.id === active || (m.groups?.includes(active) ?? false));
-              return (
-                <Marker
-                  key={m.id ?? `${m.label}-${i}`}
-                  position={[m.lat, m.lon]}
-                  icon={markerIcon(m.kind, { difficulty: m.difficulty, selected: hit })}
-                  opacity={groupActive && !hit ? 0.3 : 1}
-                  zIndexOffset={hit ? 1000 : 0}
-                  ref={(r) => { if (m.id) { if (r) refs.current.set(m.id, r); else refs.current.delete(m.id); } }}
-                  eventHandlers={{
-                    // Hover (or tap) a pin: open its info popup and highlight + scroll to its row in the list.
-                    // Open the popup first: that closes the previous one, whose popupclose clears the old highlight.
-                    mouseover: (e) => { if (!m.id) return; e.target.openPopup(); ex?.setActive(m.id, "map"); },
-                    click: (e) => { if (!m.id) return; e.target.openPopup(); ex?.setActive(m.id, "map"); },
-                    popupclose: () => { if (m.id && activeRef.current === m.id) ex?.setActive(null, "map"); },
-                  }}
-                >
-                  <MarkerPopup m={m} />
-                </Marker>
-              );
-            })}
-          </LayerGroup>
-        </LayersControl.Overlay>
+        {!parkMode && (
+          <LayersControl.Overlay name="Trails" checked>
+            {pinLayer}
+          </LayersControl.Overlay>
+        )}
 
-        {Object.entries(overlays).map(([name, ms]) =>
+        {!parkMode && Object.entries(overlays).map(([name, ms]) =>
           ms.length ? (
             <LayersControl.Overlay key={name} name={`${name} (${ms.length})`} checked={name !== "River Gauges"}>
               <LayerGroup>
@@ -240,7 +272,16 @@ export default function LeafletMap({ center, zoom = 10, markers = [], line: sing
           ) : null,
         )}
       </LayersControl>
+      {parkMode && osm && osm.features.length > 0 && <OsmTrailsLayer />}
+      {parkMode && pinLayer}
       <ScaleControl position="bottomleft" imperial metric={false} />
+      {parkMode && shownMarkers.length > TOP_PINS && (
+        <div ref={pillRef} className="map-pill-wrap">
+          <button type="button" className="map-pill" onClick={() => setShowAll((v) => !v)} aria-pressed={showAll}>
+            {showAll ? `Show top ${TOP_PINS}` : `Show all ${shownMarkers.length}`}
+          </button>
+        </div>
+      )}
       <FitTo line={line} markers={markers} fitMarkers={fitMarkers} bounds={bounds} />
       <ActiveSync refs={refs} />
       <AutoResize />

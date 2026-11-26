@@ -104,34 +104,42 @@ function Body({ k, d, timeZone }: { k: ConditionKey; d: any; timeZone: string })
   }
 }
 
-export function ConditionsPanel({ parkCode, activity, timeZone }: { parkCode: string; activity?: string; timeZone: string }) {
-  const [data, setData] = useState<Results | null>(null);
-  const [loading, setLoading] = useState(true);
+/**
+ * Live conditions for a park. Each card loads on its own (one request per source), so a slow
+ * source like OpenStreetMap never holds up the forecast or alerts. Switching activity cancels
+ * the previous requests, so an old answer can't replace a newer one.
+ */
+export function ConditionsPanel({ parkCode, keys, timeZone }: { parkCode: string; keys: ConditionKey[]; timeZone: string }) {
+  const [data, setData] = useState<Results>({});
+  const keyList = keys.join(",");
 
   useEffect(() => {
-    // Each activity click cancels the previous request, so a slow answer can't overwrite a newer one.
     const ctrl = new AbortController();
-    setLoading(true);
-    const qs = activity ? `?activity=${activity}` : "";
-    fetch(`/api/parks/${parkCode}/conditions${qs}`, { signal: ctrl.signal })
-      .then((r) => r.json())
-      .then((j) => { setData(j.data); setLoading(false); })
-      .catch((e) => { if ((e as Error).name !== "AbortError") { setData({}); setLoading(false); } });
+    setData({});
+    for (const k of keyList.split(",").filter(Boolean) as ConditionKey[]) {
+      fetch(`/api/parks/${parkCode}/${k}`, { signal: ctrl.signal })
+        .then((r) => r.json())
+        .then((j: SourceResult<any>) => setData((d) => ({ ...d, [k]: j })))
+        .catch((e) => {
+          if ((e as Error).name === "AbortError") return;
+          setData((d) => ({ ...d, [k]: { source: k, ok: false, fetchedAt: "", attribution: "", error: "Couldn't load" } }));
+        });
+    }
     return () => ctrl.abort();
-  }, [parkCode, activity]);
-
-  if (loading) return <p className="muted">Loading live conditions…</p>;
-  if (!data) return null;
+  }, [parkCode, keyList]);
 
   return (
     <div className="panel-grid">
-      {(Object.entries(data) as [ConditionKey, SourceResult<any>][]).map(([k, r]) => (
-        <div key={k} className="card panel" style={k === "weather" ? { gridColumn: "1 / -1" } : undefined}>
-          <h3>{titleCase(TITLES[k])}</h3>
-          {r.ok && r.data ? <Body k={k} d={r.data} timeZone={timeZone} /> : <p className="err">Unavailable: {r.error}</p>}
-          {r.attribution && <div className="src">Source: {r.attribution}</div>}
-        </div>
-      ))}
+      {(keyList.split(",").filter(Boolean) as ConditionKey[]).map((k) => {
+        const r = data[k];
+        return (
+          <div key={k} className="card panel" style={k === "weather" ? { gridColumn: "1 / -1" } : undefined}>
+            <h3>{titleCase(TITLES[k])}</h3>
+            {!r ? <p className="muted small">Loading…</p> : r.ok && r.data ? <Body k={k} d={r.data} timeZone={timeZone} /> : <p className="err">Unavailable: {r.error}</p>}
+            {r?.attribution && <div className="src">Source: {r.attribution}</div>}
+          </div>
+        );
+      })}
     </div>
   );
 }

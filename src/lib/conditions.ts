@@ -56,9 +56,21 @@ export async function getCondition(park: Park, key: ConditionKey): Promise<Sourc
   }
 }
 
+/** No single source may hold up a page for longer than this. */
+const SOURCE_TIMEOUT_MS = 15000;
+
+/** getCondition, but a source that hangs comes back as "unavailable" instead of blocking. */
+export function getConditionCapped(park: Park, key: ConditionKey): Promise<SourceResult<unknown>> {
+  let timer: ReturnType<typeof setTimeout>;
+  const slow = new Promise<SourceResult<unknown>>((resolve) => {
+    timer = setTimeout(() => resolve(unavailable(key, "This source is slow to respond right now. Try again shortly.")), SOURCE_TIMEOUT_MS);
+  });
+  return Promise.race([getCondition(park, key).catch((e) => unavailable(key, (e as Error).message)), slow]).finally(() => clearTimeout(timer));
+}
+
 /** Fetch many conditions in parallel; failures are isolated per source. */
 export async function getConditions(park: Park, keys: ConditionKey[]) {
   const unique = [...new Set(keys)];
-  const results = await Promise.all(unique.map((k) => getCondition(park, k)));
+  const results = await Promise.all(unique.map((k) => getConditionCapped(park, k)));
   return Object.fromEntries(unique.map((k, i) => [k, results[i]])) as Record<ConditionKey, SourceResult<unknown>>;
 }
