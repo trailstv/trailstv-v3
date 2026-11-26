@@ -1,0 +1,6 @@
+{
+  "_comment": "What needs TrailsTV+ (paid, trial or complimentary). Set a feature to false to make it free again. Admins always have full access.",
+  "trips": true,
+  "saving": true,
+  "activities": true
+}

@@ -10,12 +10,14 @@
     "currency": "usd",
     "grants": "plus",
     "features": [
+      "Trip planner: day-by-day itineraries",
+      "Save, favorite and log every park, trail and campground",
+      "Every activity page, with maps and live conditions",
       "Members-only park videos",
-      "Offline packs for every park",
-      "GPX downloads for every trail",
-      "Condition alerts (coming soon)",
-      "Support park data development"
-    ]
+      "GPX downloads and offline packs for every park",
+      "7-day free trial for new members"
+    ],
+    "trialDays": 7
   },
   {
     "slug": "plus-yearly",
@@ -31,7 +33,8 @@
     "features": [
       "Everything in Monthly",
       "Two months free"
-    ]
+    ],
+    "trialDays": 7
   },
   {
     "slug": "park-pack",
