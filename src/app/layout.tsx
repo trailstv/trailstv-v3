@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: { default: "TrailsTV – Viewing America's National Parks", template: "%s · TrailsTV" },
   description: "Viewing America's national parks",
   applicationName: "TrailsTV",
-  openGraph: { siteName: "TrailsTV", description: "Viewing America's national parks", type: "website" },
+  openGraph: { siteName: "TrailsTV", description: "Viewing America's National Parks", type: "website" },
 };
 
 /**
