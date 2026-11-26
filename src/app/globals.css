@@ -56,7 +56,7 @@ main { padding-bottom: 4rem; }
 .site-header { background: var(--primary-darker); color: #fff; position: relative; z-index: 20; }
 .site-header .container { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); gap: 1rem; }
 .site-header a { color: #fff; }
-.brand { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1; }
+.brand { font-family: var(--font-heading), Georgia, serif; font-weight: 700; font-size: 1.6rem; letter-spacing: 0; line-height: 1; }
 .brand span { color: var(--secondary); }
 .nav { display: flex; gap: 1.25rem; font-size: 0.95rem; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 body:has(.page-hero) .site-header {
